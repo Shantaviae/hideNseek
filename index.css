@@ -1,0 +1,23 @@
+html { 
+	height: 100% 
+}
+      
+body { 
+	height: 100%; 
+	margin: 0; 
+	padding: 0 
+}
+
+#map-canvas { 
+	height: 94% 
+}
+
+#header{
+	height: 5%;
+	width: 100%;
+	color: white;
+	padding-top: 1%;
+	font-size: 17pt;
+	text-align: center;
+	background-color: purple;
+}
