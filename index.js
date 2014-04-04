@@ -80,5 +80,11 @@ var prevpos;
 
 	
 		google.maps.event.addDomListener(window, 'load', initialize);
-	
-	
+	//initialize Parse
+	Parse.initialize("aR9gbvkk28bU16g4LDJ6jvLpn4qnEsqqFhllK42y", "JJpfwU0S7FFWqzDSTu67CAmxH3YzyUGRdFyGYGbs");
+	//run a test
+	var TestObject = Parse.Object.extend("TestObject");
+	var testObject = new TestObject();
+		testObject.save({foo: "bar"}).then(function(object) {
+		alert("yay! it worked");
+	});
