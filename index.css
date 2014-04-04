@@ -1,23 +1,46 @@
 html { 
-	height: 100% 
+	height: 100%;
 }
       
 body { 
 	height: 100%; 
 	margin: 0; 
-	padding: 0 
+	padding: 0;
+	font-family: 'Ubuntu', sans-serif;
 }
 
 #map-canvas { 
-	height: 94% 
+	height: 94%;
 }
 
 #header{
-	height: 5%;
+	height: 6%;
 	width: 100%;
 	color: white;
 	padding-top: 1%;
-	font-size: 17pt;
+	font-size: 16pt;
+	line-height: 18pt;
 	text-align: center;
-	background-color: purple;
+	background-color: #B1009B;
+	font-weight: bold;
+}
+
+#divTimer{
+	color: #FFFFFF;
+	font-size: 14pt;
+	line-height: 20pt;
+	text-align: center;
+	position:fixed;
+    right:5%;
+    bottom: 5%; 
+	width:53px;
+	height:27px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border:1px solid #121200;
+	background:rgba(177,0,155,0.9);
+	-webkit-box-shadow: #BFBFBF 3px 3px 3px;
+	-moz-box-shadow: #BFBFBF 3px 3px 3px; 
+	box-shadow: #BFBFBF 3px 3px 3px;
 }
