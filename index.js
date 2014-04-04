@@ -80,6 +80,16 @@ var prevpos;
 
 	
 		google.maps.event.addDomListener(window, 'load', initialize);
+		
+		
+/*
+*
+*   Use parse.com as the backend data storage
+*
+*   Data management implementations located here
+*
+*
+*/
 	//initialize Parse
 	Parse.initialize("aR9gbvkk28bU16g4LDJ6jvLpn4qnEsqqFhllK42y", "JJpfwU0S7FFWqzDSTu67CAmxH3YzyUGRdFyGYGbs");
 	//run a test
