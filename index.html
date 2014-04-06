@@ -2,24 +2,63 @@
 <html>
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
 	<link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
-<!--     <style type="text/css">
-      html { height: 100% }
-      body { height: 100%; margin: 0; padding: 0 }
-      #map-canvas { height: 100% }
-    </style> -->
+	<link rel="stylesheet" href="alertify.core.css" />
+	<link rel="stylesheet" href="alertify.default.css" />
+	
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSWmq0ggeLi3YlxAOSQ3Wo6M6RPRZWPk8&sensor=true">
     </script>
-    <script type="text/javascript" src = "index.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script type="text/javascript" src = "timer.js"></script>
+	<script type="text/javascript" src="alertify.min.js"></script>
+	<script type="text/javascript" src = "index.js"></script>
+    <script type="text/javascript" src = "mainMaps.js"></script>
   </head>
+  
+  
   <body>
-  	<div id = "header"> Hide N Seek </div>
-    <div id= "map-canvas"> </div>
-	<div id="divTimer">10:00</div>
+  	<div id = "header"> <img src="logo1transparent.png" width="50%" style="margin-top:2%" alt="Hide-N-Seek Logo"/> </div>
+    <div id = "map-canvas"> </div>
+	<div id = "home">
+		<img src="logo1transparent.png" width="90%" alt="Hide-N-Seek Logo"/><br/><br/><br/><br/><br/><br/>
+		<input type="button" class="btn" value="Start Game" onClick="startForm()"/><br/><br/>
+		<input type="button" class="btn" value="Join Game" onClick="joinGame()"/>
+	</div>
+	<div id = "startFormDiv">
+		<form id="startGameForm" name="startGameForm" action="index.html" style="text-align:left; font-size:15pt;">
+			<table style="margin:3%; font-size:14pt; width: 93%;">
+				<tr>
+				  <td class="col1" colspan="1" width="70%"></td>
+				  <td class="col2" colspan="1" width="30%"></td>
+				</tr>
+				<tr class="row">
+				  <td colspan="2" style="text-align:center;"><input type="text" class="textbox" name="gName" placeholder="Game Name" style="font-size:16pt; line-height:18pt;"></td>
+				</tr>
+				<tr class="row">
+				  <td class="col1">Start Time:</td>
+				  <td class="col2"><input type="time" class="stextbox" name="sTime" value="10:00:00"></td>
+				</tr>
+				<tr class="row">
+				  <td class="col1">End Time:</td>
+				  <td class="col2"><input type="time" class="stextbox" name="eTime" value="12:00:00"></td>
+				</tr>
+				<tr class="row">
+				  <td class="col1">Max # of Players:</td>
+				  <td class="col2"><input type="textbox" class="ntextbox" name="numPlayers"></td>
+				</tr>
+				<tr class="row">
+				  <td class="col1">Game Radius:</td>
+				  <td class="col2"><input type="textbox" class="ntextbox" name="gRadius"></td>
+				</tr>
+			</table>
+			
+			<p style="text-align: center">
+			<input type="button" class="btn2" value="Cancel" onClick="cancelForm(this.form)"/>
+			<input type="submit" class="btn2" value="Start"/></p>
+		</form> 
+	</div>
+	<div id ="divTimer">10:00</div>
 	<!-- Example for how to stop the game/clock for the tag buttons implemented in timer.js
 	<input id="tag" value=" Tag " onclick="javaScript:stop(true);" type="button" /><br/>-->
   </body>

@@ -1,0 +1,141 @@
+html { 
+	height: 100%;
+}
+      
+body { 
+	height: 100%; 
+	margin: 0; 
+	padding: 0;
+	font-family: 'Ubuntu', sans-serif;
+	background-color: #74AFAD;
+}
+
+#map-canvas { 
+	height: 94%;
+}
+
+#header{
+	height: 8%;
+	width: 100%;
+	color: white;
+	padding-top: 1%;
+	font-size: 18pt;
+	line-height: 20pt;
+	text-align: center;
+	background-color: #74AFAD;
+	font-weight: bold;
+}
+
+#home {
+	text-align:center;
+	margin-top:45%;
+}
+
+#divTimer{
+	color: #ECECEA;
+	font-size: 14pt;
+	line-height: 20pt;
+	text-align: center;
+	position:fixed;
+    right:5%;
+    bottom: 5%; 
+	width:53px;
+	height:27px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border:1px solid #558C89;
+	background:rgba(217,133,59,0.9);
+	-webkit-box-shadow: #ECECEA 3px 3px 3px;
+	-moz-box-shadow: #ECECEA 3px 3px 3px; 
+	box-shadow: #ECECEA 3px 3px 3px;
+}
+
+.btn {
+
+  font-family: Georgia;
+  color: #ECECEA;
+  font-size: 24px;
+  background: #D9853B;
+  padding: 10px 20px 10px 20px;
+  border: solid #558C89 1px;
+  text-decoration: none;
+  font-family: 'Ubuntu', sans-serif;
+  width: 60%;
+}
+
+.btn:hover {
+  background: #BEA013;
+  text-decoration: none;
+}
+
+.btn2 {
+
+  font-family: Georgia;
+  color: #ECECEA;
+  font-size: 24px;
+  background: #D9853B;
+  padding: 10px 20px 10px 20px;
+  border: solid #558C89 1px;
+  text-decoration: none;
+  font-family: 'Ubuntu', sans-serif;
+  width: 38%;
+  margin: 3%;
+}
+
+.btn2:hover {
+  background: #BEA013;
+  text-decoration: none;
+}
+
+#startFormDiv {
+	margin-top: 10%;
+	text-align: center;
+	color: #FFFFFF;
+	font-family: 'Ubuntu', sans-serif;
+	font-size: 14pt;
+}
+
+.textbox { 
+
+    border: none; 
+    outline: none; 
+    padding: 6px 6px; 
+	width: 98%;
+	font-size: 14pt;
+} 
+
+/*
+	 CSS-Tricks Example
+	 by Chris Coyier
+	 http://css-tricks.com
+*/
+
+.stextbox{ 
+
+    border: none; 
+    outline: none; 
+    padding: 6px 6px; 
+	width: 95%;
+	font-size: 14pt;
+}
+.ntextbox{ 
+
+    border: none; 
+    outline: none; 
+    padding: 6px 6px; 
+	width: 63%;
+	font-size: 14pt;
+}
+
+.col1 {
+	text-align:left; 
+}
+
+.col2 {
+	text-align:right;
+}
+
+.row {
+	height:50px;
+}
