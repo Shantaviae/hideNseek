@@ -3,6 +3,8 @@
  * EECS 394 Team Yellow
  */
 
+ var HideNSeek = {};
+
 /*
  * User
  * - userId:
@@ -11,6 +13,16 @@
  * - gameFk: foriegn key linking user to a game, can be null if user isn't in a game
 
  */
+var HideNSeek.User = Parse.Object.extend("User", {
+	// Instance methods
+	// Instance properties
+	initialize: function (attrs, options) {
+		
+	}
+}, {
+	// Class methods
+
+});
 
 
 
@@ -26,6 +38,16 @@
  * - creatorIsSeeker: boolean, true if user who created game is seeker, false otherwise
 
  */
+ var HideNSeek.Game = Parse.Object.extend("Game", {
+	// Instance methods
+	// Instance properties
+	initialize: function (attrs, options) {
+		
+	}
+}, {
+	// Class methods
+
+});
 
 
 /*
@@ -37,6 +59,16 @@
  * - gameFk: foriegn key to a game
 
  */
+ var HideNSeek.Location = Parse.Object.extend("Location", {
+	// Instance methods
+	// Instance properties
+	initialize: function (attrs, options) {
+
+	}
+}, {
+	// Class methods
+
+});
 
 
 /*
@@ -47,6 +79,18 @@
  * - timeStamp:
 
  */
+ var HideNSeek.Tag = Parse.Object.extend("Tag", {
+	// Instance methods
+	// Instance properties
+	initialize: function (attrs, options) {
+
+	}
+}, {
+	// Class methods
+
+});
+
+
 
 /*
  * Message
@@ -55,6 +99,16 @@
  * - gameFk: foriegn key to game
 
  */
+ var HideNSeek.Message = Parse.Object.extend("Message", {
+	// Instance methods
+	// Instance properties
+	initialize: function (attrs, options) {
+
+	}
+}, {
+	// Class methods
+
+});
 
 
 
