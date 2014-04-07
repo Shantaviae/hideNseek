@@ -102,6 +102,7 @@ function revertTime(timeNum) {
 }
 
 
+
 function decrementValue() {
     var curTime = parseTimer();
     if ( curTime > 0){
