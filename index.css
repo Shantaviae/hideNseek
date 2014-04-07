@@ -9,6 +9,9 @@ body {
 	font-family: 'Ubuntu', sans-serif;
 }
 
+#home {
+	height :100%;
+}
 #map-canvas { 
 	height: 94%;
 }
