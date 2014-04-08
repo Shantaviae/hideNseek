@@ -1,5 +1,5 @@
 var handler;
-var divSpeed = 1000;
+var divSpeed = 100;
 var tag, timeNum;
 var gName;
 var sTime;
