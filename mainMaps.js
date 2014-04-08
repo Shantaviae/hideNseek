@@ -1,4 +1,5 @@
 	
+var line;
 var prevpos;
 var user_locations = new Array(5);
 var i = 0;
@@ -44,12 +45,13 @@ var seekers = new Array();
 	function game(gameName,totalTime){
 
 	}
+
 	function initialize() {
 			
 		var pos = getUserLocation();	
 		 mapOptions = {
 			center: new google.maps.LatLng(45, 45),
-			zoom: 17,
+			zoom: 20,
 			mapTypeControl: false,
 			streetViewControl: false
 
@@ -66,45 +68,25 @@ var seekers = new Array();
 			
 			var hider = new Hider(pos,false,addHider(pos,map));
 			hiders.push(hider);
-			//console.log(hiders[0].currentLocation);
+			//console.log(hiders[0].currentLocation);	  
 			console.log("this is K "+hider.currentLocation.A+"   this is A:"+hider.currentLocation.k+ "\n");
-
-
-
 		});
 
-
-		
-
-
-
-
-
-				// google.maps.event.addListener(hiders[i].marker,"click",function(){
-
-				// 	
-				// 	var currentHider = hiders[i].currentLocation;
-				// 	var p2 = new point(currentHider.A,currentHider.k);
-				// 	var p1 = new point(currentSeeker.A,currentSeeker.k);
-				// 	var distance = lineDistance(p1,p2)*100000;
-				// 	console.log("the distance is " + distance);
-				// 	if ( distance <= 15){
-				// 		var infowindow = new google.maps.InfoWindow({
-				// 			content :"Got You!"
-				// 		});
-				// 	}	
-				// 	infowindow.open(map,hider[i].marker);
-				// });
-			
-		
-
-
 		window.setInterval(function(){collectData(map);},1000);
-
-
-		
 	}
 
+	// Use the DOM setInterval() function to change the offset of the symbol
+	// at fixed intervals.
+	function animateCircle(){
+		var count = 0;
+	    window.setInterval(function() {
+	      count = (count + 10) % 200;
+
+	      var icons = line.get('icons');
+	      icons[0].offset = (count / 2) + '%';
+	      line.set('icons', icons);
+	  }, 20);
+	}
 
 	function addHider(location,map){
 
@@ -115,15 +97,30 @@ var seekers = new Array();
 	    scaledSize: new google.maps.Size(24,24)
 	    // The origin for this image is 0,0
 	  };
-
-		
-
 		var marker = new google.maps.Marker({
 			map:map,
 			position:location,
 			icon: image
 
 		});
+
+		// var lineCoordinates = [
+		//     new google.maps.LatLng(location.k ,location.A),
+		//     new google.maps.LatLng(location.k*1.000001, location.A*1.000001)
+		//   ];
+
+		//   // Create the polyline and add the symbol to it via the 'icons' property.
+		//   line = new google.maps.Polyline({
+		//     path: lineCoordinates,
+		//     icons: [{
+		//       icon: image,
+		//       offset: '100%'
+		//     }],
+		//     map: map
+		//   });
+		//  // line.setVisible(false);
+		//   animateCircle();
+//==================This is for tapping hiders===================//		
 		google.maps.event.addListener(marker, 'click', function() {
 
 			   var currentSeeker = seekers[0].currentLocation;
@@ -148,6 +145,8 @@ var seekers = new Array();
 		return marker;
 							
 	}
+
+	
 
 	function addSeeker(location,map){
 		var image = "marker_seeker.png"
@@ -245,9 +244,15 @@ var seekers = new Array();
 		//console.log(pos);
 		var image = "marker_seeker.png"
 
-		//if (prevpos != null) prevpos.setMap(null);
-		
-		seekers[0].marker.position = pos;
+		//if (prevpos != null) prevpos.setMap(null);	
+		var marker = new google.maps.Marker({
+			map:map,
+			position:pos,
+			icon: image
+
+		});
+		seekers[0].marker.setMap(null);
+		seekers[0].marker = marker;
 		//prevpos = marker;					
 			
 
@@ -275,7 +280,7 @@ var seekers = new Array();
 	  switch(error.code) 
 	    {
 	    case error.PERMISSION_DENIED:
-	      x.innerHTML="User denied the request for Geolocation."
+	      alert("User denied the request for Geolocation.")
 	      break;
 	    case error.POSITION_UNAVAILABLE:
 	      x.innerHTML="Location information is unavailable."
