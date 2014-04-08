@@ -162,7 +162,4 @@ body {
 	border-radius: 1px;
 	border:1px solid #558C89;
 	background:rgba(217,133,59,0.9);
-	-webkit-box-shadow: #ECECEA 3px 3px 3px;
-	-moz-box-shadow: #ECECEA 3px 3px 3px; 
-	box-shadow: #ECECEA 3px 3px 3px;
 }
