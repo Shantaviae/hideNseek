@@ -1,5 +1,5 @@
 var handler, handler2;
-var divSpeed = 100;
+var divSpeed = 1000;
 var tag, timeNum;
 var gName;
 var sTime;
@@ -50,7 +50,6 @@ function goToWaitPage() {
 }
 
 function leaveWaitPage(){
-	$("#waitPage").hide();
 	$("#divTimer").show();
 	$("#map-canvas").show();
 	$("#header").show();
