@@ -1,5 +1,5 @@
-var handler;
-var divSpeed = 1000;
+var handler, handler2;
+var divSpeed = 100;
 var tag, timeNum;
 var gName;
 var sTime;
@@ -20,6 +20,7 @@ $( document ).ready(function() {
 		$("#header").hide();
 		$("#startFormDiv").hide();
 		$("#home").show();
+		$("#waitPage").hide();
 	} 
 	else {
 		$("#divTimer").show();
@@ -27,7 +28,7 @@ $( document ).ready(function() {
 		$("#header").show();
 		$("#startFormDiv").hide();
 		$("#home").hide();
-		startGame();
+		$("#waitPage").hide();
 	}
 });
 
@@ -38,29 +39,52 @@ function delineate(str)
 	return(str.substring(theleft, theright));
 }
 
+function goToWaitPage() {
+	$("#waitPage").show();
+	$("#divTimer").hide();
+	$("#map-canvas").hide();
+	$("#header").show();
+	$("#startFormDiv").hide();
+	$("#home").hide();
+	handler2 = setInterval("decrementValue('divTimer2')", divSpeed);
+}
+
+function leaveWaitPage(){
+	$("#waitPage").hide();
+	$("#divTimer").show();
+	$("#map-canvas").show();
+	$("#header").show();
+	$("#startFormDiv").hide();
+	$("#home").hide();
+	$("#waitPage").hide();
+	startGame();
+}
 function startForm() {
 	clearForm(document.getElementById('startGameForm'));
 	$("#header").show();
 	$("#home").hide();
 	$("#startFormDiv").show();
+	$("#waitPage").hide();
 }
 
 function cancelForm(oForm) {
 	$("#header").hide();
 	$("#home").show();
 	$("#startFormDiv").hide();
+	$("#waitPage").hide();
 	clearForm(oForm);
 	
 }
 
 function startGame() {
 	
-	handler = setInterval("decrementValue()", divSpeed);
+	handler = setInterval("decrementValue('divTimer')", divSpeed);
 	//send all data to the server
 }
 
 function stop(tag) {
     clearInterval(handler);
+		
     if (tag == false){
 		alertify.alert('Time up! You lose!');
         //alert("Time up! You lose!");
@@ -71,9 +95,8 @@ function stop(tag) {
     }
 }
 
-function parseTimer() {
-    
-    var time = document.getElementById('divTimer').innerHTML;
+function parseTimer(timer) {
+    var time = document.getElementById(timer).innerHTML;
     var times = time.split(":");
     var cTime = parseInt(times[0], 10)*60 + parseInt(times[1], 10);
     return cTime;
@@ -103,16 +126,24 @@ function revertTime(timeNum) {
 
 
 
-function decrementValue() {
-    var curTime = parseTimer();
+function decrementValue(timer) {
+	var timer;
+    var curTime = parseTimer(timer);
     if ( curTime > 0){
         
         curTime = curTime - 1;
-        document.getElementById('divTimer').innerHTML = revertTime(curTime);
+        document.getElementById(timer).innerHTML = revertTime(curTime);
     }
     else 
     {
-        stop(false);
+   
+		if (timer == "divTimer2") {
+			leaveWaitPage();
+			clearInterval(handler2);
+		}
+		else {
+			stop(false);
+		}
     }
 }
 

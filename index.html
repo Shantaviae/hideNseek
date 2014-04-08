@@ -24,8 +24,21 @@
     <div id = "map-canvas"> </div>
 	<div id = "home" >
 		<img src="logo1transparent.png" width="90%" alt="Hide-N-Seek Logo"/><br/><br/><br/><br/><br/><br/>
-		<input type="button" class="btn" value="Start Game" onClick="startForm()"/><br/><br/>
-		<input type="button" class="btn" value="Join Game" onClick="joinGame()"/>
+		<input type="button" class="btn" value="Start Game" onClick="goToWaitPage()"/><br/><br/>
+		<input type="button" class="btn" value="Join Game" onClick="goToWaitPage()"/>
+	</div>
+	<div id = "waitPage"> 
+		<br/><br/>
+		<div id ="divTimer2">01:00</div><br/><br/>
+		<img src="marker_hider.png" alt = "Hider Icon"/> Hider <br/>
+		<img src="marker_seeker.png" alt = "Seeker Icon"/> Seeker <br/><br/>
+		
+		You are the seeker.<br/><br/>
+		
+		<div id="GameRules">
+			Tap the hider if they are close enough to you in order to win the game!<br/>
+		</div>
+		
 	</div>
 	<div id = "startFormDiv">
 		<form id="startGameForm" name="startGameForm" action="index.html" style="text-align:left; font-size:15pt;">
