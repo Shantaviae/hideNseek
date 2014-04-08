@@ -85,7 +85,7 @@ function stop(tag) {
     clearInterval(handler);
 		
     if (tag == false){
-		alertify.alert('Time up! You lose!');
+		alertify.alert('Game Over!');
         //alert("Time up! You lose!");
     }
     else{
