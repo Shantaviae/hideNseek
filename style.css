@@ -1,5 +1,7 @@
 html { 
 	height: 100%;
+	margin: 0; 
+	padding: 0;
 }
       
 body { 
@@ -12,6 +14,9 @@ body {
 
 #map-canvas { 
 	height: 94%;
+	padding: 0%;
+	margin: 0%;
+	position: center;
 }
 
 #header{
@@ -80,7 +85,7 @@ body {
   border: solid #558C89 1px;
   text-decoration: none;
   font-family: 'Ubuntu', sans-serif;
-  width: 38%;
+  width: auto;
   margin: 3%;
 }
 
@@ -139,4 +144,30 @@ body {
 
 .row {
 	height:50px;
+}
+
+#waitPage {
+	text-align: center;
+	margin: 10%;
+	color: #FFFFFF;
+	font-size: 18pt;
+	
+}
+
+#divTimer2{
+	color: #ECECEA;
+	font-size: 18pt;
+	line-height: 24pt;
+	text-align: center;
+	width:50%;
+	height:15%;
+	margin: auto;
+	-webkit-border-radius: 1px;
+	-moz-border-radius: 1px;
+	border-radius: 1px;
+	border:1px solid #558C89;
+	background:rgba(217,133,59,0.9);
+	-webkit-box-shadow: #ECECEA 3px 3px 3px;
+	-moz-box-shadow: #ECECEA 3px 3px 3px; 
+	box-shadow: #ECECEA 3px 3px 3px;
 }

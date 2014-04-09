@@ -7,7 +7,8 @@ var mapOptions;
 var curLocation;
 var hiders =  new Array();
 var seekers = new Array();
-
+var handler;
+var divSpeed =1000;
 
     $( document ).ready(function() {
 
@@ -15,9 +16,9 @@ var seekers = new Array();
     	seekers.push(seeker);
     });
 
+
+
 	google.maps.event.addDomListener(window, 'load', initialize);
-
-
 	function Hider(currentLocation,isTagged,marker){
 		//this.playerName = playerName;
 		//this.startTime = startTime;
@@ -26,9 +27,6 @@ var seekers = new Array();
 		this.marker = marker;
 	}
 
-
-
-
 	function Seeker(currentLocation,marker){
 		//this.playerName = playerName;
 		//this.startTime = startTime;
@@ -36,18 +34,16 @@ var seekers = new Array();
 		this.marker = marker;
 	}
 
-
 	function point(x,y){
 		this.x = x;
 		this.y = y;
 	}
 
-	function game(gameName,totalTime){
-
-	}
-
 	function initialize() {
 			
+
+		handler = setInterval("decrementValue('divTimer')", divSpeed);	
+
 		var pos = getUserLocation();	
 		 mapOptions = {
 			center: new google.maps.LatLng(45, 45),
@@ -132,9 +128,14 @@ var seekers = new Array();
 			icon: image
 
 		});
+		if (seekers[0].marker!=null)
+			seekers[0].marker.setMap(null);
 		seekers[0].marker = marker;
+		seekers[0].currentLocation = location;
 							
 	}
+
+
 	function initializeLocation(map){
 		if (navigator.geolocation){
 			
@@ -143,14 +144,12 @@ var seekers = new Array();
 				position.coords.longitude)
 				map.setCenter(pos);	
 				addSeeker(pos,map);
-
-				seekers[0].currentLocation = pos;
 				
-	
 	},function(){
 		handleNoGeolocation(true);
 	});
 	}
+
 	else {
 		// Browser doesn't support Geolocation
 		handleNoGeolocation(false);
@@ -217,20 +216,8 @@ var seekers = new Array();
 		var pos = new google.maps.LatLng(latitude,longitude);
 		map.setCenter(pos);
 		//console.log(pos);
-		var image = "marker_seeker.png"
-
-		//if (prevpos != null) prevpos.setMap(null);	
-		var marker = new google.maps.Marker({
-			map:map,
-			position:pos,
-			icon: image
-
-		});
-		seekers[0].marker.setMap(null);
-		seekers[0].marker = marker;
-		//prevpos = marker;					
-			
-
+		//var image = "marker_seeker.png"
+		addSeeker(pos,map);
 			
 	}
 
@@ -285,5 +272,62 @@ var seekers = new Array();
 	
 	
 		
+function stop(tag) {
+    clearInterval(handler);
+    if (tag == false){
+		alertify.alert('Time up! You lose!');
+        //alert("Time up! You lose!");
+    }
+    else{
+		alertify.alert('Congrats! You win!');
+        //alert("Congrats! You win!");
+    }
+}
+
+function parseTimer(timer) {
+    var time = document.getElementById(timer).innerHTML;
+    var times = time.split(":");
+    var cTime = parseInt(times[0], 10)*60 + parseInt(times[1], 10);
+    return cTime;
+}
+
+function revertTime(timeNum) {
+    var seconds = timeNum % 60;
+    var minutes = (timeNum - seconds) / 60;
 	
+	var pTime;
+	
+	if (seconds < 10) {
+		pTime = minutes + ":0" + seconds;
+	}
+	if (minutes < 10) {
+		pTime = "0" + minutes + ":" + seconds;
+	}
+	if (minutes < 10 & seconds < 10) {
+		pTime = "0" + minutes + ":0" + seconds;
+	}
+	if (minutes >= 10 & seconds >= 10) {
+		pTime = minutes + ":" + seconds;
+	}
+	
+    return pTime;
+}
+
+
+
+function decrementValue(timer) {
+ 	var timer;
+     var curTime = parseTimer(timer);
+    if ( curTime > 0){
+        
+        curTime = curTime - 1;
+        document.getElementById(timer).innerHTML = revertTime(curTime);
+    }
+    else 
+    {
+        
+ 			stop(false);
+ 		
+    }
+}
      

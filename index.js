@@ -1,4 +1,5 @@
-var handler;
+
+var handler, handler2;
 var divSpeed = 100;
 var tag, timeNum;
 var gName;
@@ -6,10 +7,18 @@ var sTime;
 var eTime;
 var numPlayers;
 var gRadius;
-
+var status;
 $( document ).ready(function() {
 
 	var locate = window.location;
+	
+	// $("#header").hide();
+	// $("#home").show();
+	// $("#divTimer").hide();
+	// $("#map-canvas").hide();
+	// $("#waitPage").hide();
+	// $("#startFormDiv").hide();
+	// $("#divTimer").hide();
 	document.startGameForm.gName.value = locate;
 	var gName = document.startGameForm.gName.value;
 	gName = delineate(gName);
@@ -20,16 +29,53 @@ $( document ).ready(function() {
 		$("#header").hide();
 		$("#startFormDiv").hide();
 		$("#home").show();
+		$("#waitPage").hide();
 	} 
+	
 	else {
+		// $("#divTimer").show();
+		// $("#map-canvas").show();
+		// $("#header").show();
+		// $("#startFormDiv").hide();
+		// $("#home").hide();
+		// $("#waitPage").hide();
+		goToWaitPage();
+		
+		//setTimeout(function(){startGame();},5000);
+		//startGame();
+	}
+});
+function start(){
+		$("#divTimer").hide();
+		//$("#map-canvas").hide();
+		$("#header").hide();
+		$("#startFormDiv").hide();
+		$("#home").show();
+		$("#waitPage").hide();
+
+
+}
+function goToWaitPage() {
+	
+	$("#waitPage").show();
+	$("#divTimer").hide();
+	//$("#map-canvas").hide();
+	$("#header").show();
+	$("#startFormDiv").hide();
+	$("#home").hide();
+	//handler2 = setInterval("decrementValue('divTimer2')", divSpeed);
+}
+
+function startGame(){
 		$("#divTimer").show();
-		$("#map-canvas").show();
+		//$("#map-canvas").show();
 		$("#header").show();
 		$("#startFormDiv").hide();
 		$("#home").hide();
-		startGame();
-	}
-});
+		$("#waitPage").hide();
+		handler = setInterval("decrementValue('divTimer')", divSpeed);
+		
+}
 
 function delineate(str)
 {
@@ -40,9 +86,11 @@ function delineate(str)
 
 function startForm() {
 	clearForm(document.getElementById('startGameForm'));
+	
 	$("#header").show();
 	$("#home").hide();
 	$("#startFormDiv").show();
+	$("#waitPage").hide();
 }
 
 function cancelForm(oForm) {
@@ -50,14 +98,10 @@ function cancelForm(oForm) {
 	$("#home").show();
 	$("#startFormDiv").hide();
 	clearForm(oForm);
+	$("#waitPage").hide();
 	
 }
 
-function startGame() {
-	
-	handler = setInterval("decrementValue()", divSpeed);
-	//send all data to the server
-}
 
 function stop(tag) {
     clearInterval(handler);
@@ -71,9 +115,8 @@ function stop(tag) {
     }
 }
 
-function parseTimer() {
-    
-    var time = document.getElementById('divTimer').innerHTML;
+function parseTimer(timer) {
+    var time = document.getElementById(timer).innerHTML;
     var times = time.split(":");
     var cTime = parseInt(times[0], 10)*60 + parseInt(times[1], 10);
     return cTime;
@@ -103,16 +146,19 @@ function revertTime(timeNum) {
 
 
 
-function decrementValue() {
-    var curTime = parseTimer();
+function decrementValue(timer) {
+ 	var timer;
+     var curTime = parseTimer(timer);
     if ( curTime > 0){
         
         curTime = curTime - 1;
-        document.getElementById('divTimer').innerHTML = revertTime(curTime);
+        document.getElementById(timer).innerHTML = revertTime(curTime);
     }
     else 
     {
-        stop(false);
+        
+ 			stop(false);
+ 		
     }
 }
 
