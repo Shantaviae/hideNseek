@@ -17,7 +17,16 @@ function getAllUsers(gameId) {
 	var query = new Parse.Query(User);
 	query.equalTo("gameId",gameId);
 	var collection = query.collection();
-	return collection;
+	collection.fetch({
+		success: function (collection) {
+			collection.each(function (object) {
+				//do something
+			});
+		},
+		error:function(collection, error) {
+			console.warn("Collection error");
+		}
+	});
 }
 
 
@@ -57,22 +66,17 @@ var Game = Parse.Object.extend("Game", {
 		var query = new Parse.Query(Game);
 		var idUnique = true;
 		query.equalTo("gameId", gameId);
-		query.first({
-			success:function() {
-				idUnique = false;
+		query.find({
+			success:function(results) {
+				if (results.length == 0)
+					this.createTheGame(gameId);
+				else
+					gameIdAlreadyExists();
 			},
-			error: function() {
-				idUnique = true;
+			error:function(){
+				alert("create new game fails");
 			}
 		});
-		if (idUnique) {
-			var game = new Game();
-			game.set("gameId", gameId);
-			game.save();
-			return game;
-		} 
-		else
-			return null;
 	}
 });
 /* User object 
@@ -116,42 +120,37 @@ var User = Parse.Object.extend("User", {
 	//buggy needs callbacks
 	createNewUser: function(gameId, userId) {
 		var gameQuery = new Parse.Query(Game);
-		var hasGame = false;
+
 		gameQuery.equalTo("gameId", gameId);
 		gameQuery.find({
 			success:function(results) {
-				if (results.length == 0)
-					hasGame = true;
-				else hasGame = false;
+				if (results.length > 0)
+					this.checkUserUniqueness(gameId,userId);
+				else
+					gameIdNotExist();
 			},
 			error: function() {
-				hasGame = false;
+				alert("createNewUser fails");
 			}
 		});
-		if (!hasGame)
-			return -1;
-		//check the uniqueness of userId
+	},
+	checkUserUniqueness: function (gameId, userId) {
 		var userQuery = new Parse.Query(User);
-		var unique = true;
 		userQuery.equalTo("gameId",gameId);
-		userQuery.equalTo("userId", userId);
-		userQuery.first({
-			success: function() {
-				unique = false;
+		userQuery.equalTo("userId",userId);
+		gameQuery.find({
+			success:function(results) {
+				if (results.length == 0)
+					this.createTheUser();
+				else
+					userIdAlreadyExists();
 			},
-			error: function() {
-				unique = true;
+			error: function(){
+				alert("checkUserUniqueness fails");
 			}
 		});
-		if (!unique)
-			return -2;
-		var user = new User;
-		user.set("gameId", gameId);
-		user.set("userId", userID);
-		user.save();
-		return user;
 	}
- });
+});
 		
 
 	
