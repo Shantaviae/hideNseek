@@ -1,4 +1,3 @@
-
 /* Game object
 Data:
 	gameId: a unique id set when creating a new game (string)
@@ -25,16 +24,19 @@ var Game = Parse.Object.extend("Game", {
 		return this.get("radius");
 	}
 	setTitle: function(title) {
-		this.get("title", title);
+	//	this.get("title", title);
+		this.set("title",title);
 	},
 	setNumOfPlayers: function(numOfPlayers) {
 		this.set("numOfPlayers", numOfPlayers);
 	},
 	setTimeLimit: function(timeLimit) {
-		this.get("timeLimit",timeLimit);
+		//this.get("timeLimit",timeLimit);
+		this.set("timeLimit",timeLimit);
 	},	
 	setRadius: function(radius) {
-		return this.get("radius",radius);
+		//return this.get("radius",radius);
+		this.set("radius",radius);
 	}
  }, 
  {
@@ -70,6 +72,30 @@ Data:
 */
 var User = Parse.Object.extend("User", {
 	//to prevent front end typo. Wrap up all gets and sets
+	getuserId: function() {
+		return this.get("userId");
+	},
+	getisSeeker: function() {
+		return this.get("isSeeker");
+	},
+	getGameId: function() {
+		return this.get("gameId");
+	},
+	getlat: function() {
+		return this.get("lat");
+	},	
+	getlong: function() {
+		return this.get("long");
+	}
+	setisSeeker: function(isSeeker) {
+		this.set("isSeeker", isSeeker);
+	},
+	setlat: function(lat) {
+		this.set("lat", lat);
+	},
+	setTimeLimit: function(long) {
+		this.set("long",long);
+	}
 	
  },
  {
