@@ -15,6 +15,7 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	
 	<script type="text/javascript" src="alertify.min.js"></script>
+	<script type="text/javascript" src = "mainMaps.js"></script>
 	<script type="text/javascript" src = "index.js"></script>
    
   </head>
@@ -26,9 +27,10 @@
 	<div id = "home" >
 		<img src="logo1transparent.png" width="90%" alt="Hide-N-Seek Logo"/><br/><br/><br/><br/><br/><br/>
 		
-		<input type="button" class="btn" value="Start Game" onClick="startForm()"/><br/><br/>
+		<input type="button" class="btn" value="Start Game" onClick="goToWaitPage()"/><br/><br/>
  		<input type="button" class="btn" value="Join Game" onClick="goToWaitPage()"/>
  	</div>
+ 	<div id = "map-canvas"> </div>
  	<div id = "waitPage"> 
  		<br/><br/>
  		<img src="marker_hider.png" alt = "Hider Icon"/> Hider <br/>
@@ -40,11 +42,11 @@
  			Tap the hider if they are close enough to you in order to win the game!<br/>
  		</div>
  		<p style = "text-align:center">
- 			<a type = "button" class = "btn2" href= "map.html">Continue</a>
+ 			<div type = "button" class = "btn2" onclick="startGame()">Continue</div>
  		</p>
 	</div>
 	<div id = "startFormDiv">
-		<form id="startGameForm" name="startGameForm" action="index.html" style="text-align:left; font-size:15pt;">
+		<form id="startGameForm" name="startGameForm" action="index.html" onsubmit="startGame(); return false;" style="text-align:left; font-size:15pt;">
 			<table style="margin:3%; font-size:14pt; width: 93%;">
 				<tr>
 				  <td class="col1" colspan="1" width="70%"></td>
@@ -73,7 +75,7 @@
 			
 			<p style="text-align: center">
 			<input type="button" class="btn2" value="Cancel" onClick="cancelForm(this.form)"/>
-			<input type="submit" class="btn2" value="Start" onClick = ""/></p>
+			<input type="submit" class="btn2" value="Start" /></p>
 		</form> 
 	</div>
 	<div id ="divTimer">10:00</div>
