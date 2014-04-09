@@ -10,6 +10,17 @@ Data:
 	radius: limitation on game area (number)
 	numOfPlayers: number of players in this game (number)
 */
+
+//return a collection of users in a game
+
+function getAllUsers(gameId) {
+	var query = new Parse.Query(User);
+	query.equalTo("gameId",gameId);
+	var collection = query.collection();
+	return collection;
+}
+
+
 var Game = Parse.Object.extend("Game", {
 	//to prevent front end typo. Wrap up all gets and sets
 	getGameId: function() {
@@ -26,7 +37,7 @@ var Game = Parse.Object.extend("Game", {
 	},	
 	getRadius: function() {
 		return this.get("radius");
-	}
+	},
 	setTitle: function(title) {
 		this.set("title",title);
 	},
@@ -42,7 +53,7 @@ var Game = Parse.Object.extend("Game", {
  }, 
  {
 	createNewGame: function(gameId) {
-	//create only when gameId is unique; return null otherwise
+	//buggy needs callbacks
 		var query = new Parse.Query(Game);
 		var idUnique = true;
 		query.equalTo("gameId", gameId);
@@ -57,6 +68,7 @@ var Game = Parse.Object.extend("Game", {
 		if (idUnique) {
 			var game = new Game();
 			game.set("gameId", gameId);
+			game.save();
 			return game;
 		} 
 		else
@@ -87,7 +99,7 @@ var User = Parse.Object.extend("User", {
 	},	
 	getLong: function() {
 		return this.get("long");
-	}
+	},
 	setisSeeker: function(isSeeker) {
 		this.set("isSeeker", isSeeker);
 	},
@@ -101,14 +113,16 @@ var User = Parse.Object.extend("User", {
  },
  {
 	//class methods
-	//create new user. return a user object when succeed. return -1 when game doesn't exist. return -2 when userid is not unique
+	//buggy needs callbacks
 	createNewUser: function(gameId, userId) {
 		var gameQuery = new Parse.Query(Game);
 		var hasGame = false;
 		gameQuery.equalTo("gameId", gameId);
-		gameQuery.first({
-			success:function() {
-				hasGame = true;
+		gameQuery.find({
+			success:function(results) {
+				if (results.length == 0)
+					hasGame = true;
+				else hasGame = false;
 			},
 			error: function() {
 				hasGame = false;
@@ -134,12 +148,12 @@ var User = Parse.Object.extend("User", {
 		var user = new User;
 		user.set("gameId", gameId);
 		user.set("userId", userID);
+		user.save();
 		return user;
 	}
  });
 		
-		
-		
+
 	
 	
  
