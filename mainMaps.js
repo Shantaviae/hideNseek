@@ -10,6 +10,7 @@ var seekers = new Array();
 var handler;
 var divSpeed =1000;
 
+
     $( document ).ready(function() {
 
     	var seeker = new Seeker(null,null);
@@ -19,9 +20,10 @@ var divSpeed =1000;
 
 
 	google.maps.event.addDomListener(window, 'load', initialize);
-	function Hider(currentLocation,isTagged,marker){
+	function Hider(ID,currentLocation,isTagged,marker){
 		//this.playerName = playerName;
 		//this.startTime = startTime;
+		this.ID = ID;
 		this.currentLocation = currentLocation;
 		this.isTagged = isTagged;
 		this.marker = marker;
@@ -61,9 +63,10 @@ var divSpeed =1000;
 		google.maps.event.addDomListener(map, 'click', function(event){
 			
 			var pos = event.latLng;
-			
-			var hider = new Hider(pos,false,addHider(pos,map));
+			var len = hiders.length;
+			var hider = new Hider(0,pos,false,addHider(pos,map));
 			hiders.push(hider);
+			hider.ID = window.setInterval(function(){moveHider(hider,map);},1000);
 			//console.log(hiders[0].currentLocation);	  
 			console.log("this is K "+hider.currentLocation.A+"   this is A:"+hider.currentLocation.k+ "\n");
 		});
@@ -105,6 +108,8 @@ var divSpeed =1000;
 					var infowindow = new google.maps.InfoWindow({
 						content :"Got You!"
 					});
+
+
 				}
 				else {
 					var infowindow = new google.maps.InfoWindow({
@@ -117,7 +122,59 @@ var divSpeed =1000;
 							
 	}
 
-	
+	function moveHider(hider,map){
+		var marker = hider.marker;
+		var markerLocation = marker.position;
+
+		var lk = markerLocation.k;
+		var lA = markerLocation.A;
+
+			lk = lk + 0.00001;
+			lA = lA + 0.00001;
+
+			var newlocation = new google.maps.LatLng(lk,lA);
+
+			var image = {
+		    url: 'marker_hider.png',
+		    // This marker is 20 pixels wide by 32 pixels tall.
+		    size: new google.maps.Size(24, 24),
+		    scaledSize: new google.maps.Size(24,24)
+		    // The origin for this image is 0,0
+		  };
+			var newmarker = new google.maps.Marker({
+				map:map,
+				position:newlocation,
+				icon: image
+			});
+
+			if (marker != null)	
+				marker.setMap(null)
+			hider.marker = newmarker;
+
+			google.maps.event.addListener(newmarker, 'click', function() {
+
+			   var currentSeeker = seekers[0].currentLocation;
+			   var currentHider = newmarker.position;
+
+			   var p2 = new point(currentHider.A,currentHider.k);
+			   var p1 = new point(currentSeeker.A,currentSeeker.k);
+				var distance = lineDistance(p1,p2)*100000;
+				console.log("the distance is " + distance);
+				if ( distance <= 15){
+					var infowindow = new google.maps.InfoWindow({
+						content :"Got You!"
+					});
+					window.clearInterval(hider.ID);
+				}
+				else {
+					var infowindow = new google.maps.InfoWindow({
+						content :"You are too far!"
+					});
+				}	
+					infowindow.open(map,newmarker);
+				});
+
+	}
 
 	function addSeeker(location,map){
 		var image = "marker_seeker.png"
@@ -131,8 +188,7 @@ var divSpeed =1000;
 		if (seekers[0].marker!=null)
 			seekers[0].marker.setMap(null);
 		seekers[0].marker = marker;
-		seekers[0].currentLocation = location;
-							
+		seekers[0].currentLocation = location;						
 	}
 
 
@@ -168,6 +224,9 @@ var divSpeed =1000;
 			}
 		return curLocation;		
 		}
+
+
+
 	function positionHelper(position){
 		var pos  = new google.maps.LatLng(position.coords.latitude,
 				position.coords.longitude);
@@ -271,7 +330,7 @@ var divSpeed =1000;
 		}
 	
 	
-		
+////==========functions for Timer===================//		
 function stop(tag) {
     clearInterval(handler);
     if (tag == false){
