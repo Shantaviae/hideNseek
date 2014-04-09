@@ -8,9 +8,15 @@ var eTime;
 var numPlayers;
 var gRadius;
 var status;
+
+var myMap;
+
 $( document ).ready(function() {
 
 	var locate = window.location;
+
+	// Initialize map
+	myMap = initialize();
 	
 	// $("#header").hide();
 	// $("#home").show();
@@ -68,12 +74,15 @@ function goToWaitPage() {
 
 function startGame(){
 		$("#divTimer").show();
-		//$("#map-canvas").show();
+		$("#map-canvas").show();
 		$("#header").show();
 		$("#startFormDiv").hide();
 		$("#home").hide();
 		$("#waitPage").hide();
 		handler = setInterval("decrementValue('divTimer')", divSpeed);
+
+		google.maps.event.trigger(myMap, 'resize');
+
 		
 }
 
@@ -91,6 +100,8 @@ function startForm() {
 	$("#home").hide();
 	$("#startFormDiv").show();
 	$("#waitPage").hide();
+
+	
 }
 
 function cancelForm(oForm) {

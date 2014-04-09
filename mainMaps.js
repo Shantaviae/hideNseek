@@ -19,8 +19,10 @@ var divSpeed =1000;
 
 
 
-	google.maps.event.addDomListener(window, 'load', initialize);
-	function Hider(ID,currentLocation,isTagged,marker){
+
+	//google.maps.event.addDomListener(window, 'load', initialize);
+	function Hider(currentLocation,isTagged,marker){
+
 		//this.playerName = playerName;
 		//this.startTime = startTime;
 		this.ID = ID;
@@ -71,7 +73,14 @@ var divSpeed =1000;
 			console.log("this is K "+hider.currentLocation.A+"   this is A:"+hider.currentLocation.k+ "\n");
 		});
 
+		// center map on user on resize
+		google.maps.event.addDomListener(map, 'resize', function(event) {
+			initializeLocation(map);
+		});
+
 		window.setInterval(function(){collectData(map);},1000);
+
+		return map;
 	}
 
 	// Use the DOM setInterval() function to change the offset of the symbol
