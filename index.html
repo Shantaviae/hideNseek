@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="style.css">
 	<link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="alertify.core.css" />
@@ -16,17 +16,32 @@
 	
 	<script type="text/javascript" src="alertify.min.js"></script>
 	<script type="text/javascript" src = "index.js"></script>
-    <script type="text/javascript" src = "mainMaps.js"></script>
+   
   </head>
   
   
   <body>
   	<div id = "header"> <img src="logo1transparent.png" width="50%" style="margin-top:2%" alt="Hide-N-Seek Logo"/> </div>
-    <div id = "map-canvas"> </div>
+    <!-- <div id = "map-canvas"> </div> -->
 	<div id = "home" >
 		<img src="logo1transparent.png" width="90%" alt="Hide-N-Seek Logo"/><br/><br/><br/><br/><br/><br/>
+		
 		<input type="button" class="btn" value="Start Game" onClick="startForm()"/><br/><br/>
-		<input type="button" class="btn" value="Join Game" onClick="joinGame()"/>
+ 		<input type="button" class="btn" value="Join Game" onClick="goToWaitPage()"/>
+ 	</div>
+ 	<div id = "waitPage"> 
+ 		<br/><br/>
+ 		<img src="marker_hider.png" alt = "Hider Icon"/> Hider <br/>
+ 		<img src="marker_seeker.png" alt = "Seeker Icon"/> Seeker <br/><br/>
+ 		
+ 		You are the seeker now.<br/><br/>
+ 		
+ 		<div id="GameRules">
+ 			Tap the hider if they are close enough to you in order to win the game!<br/>
+ 		</div>
+ 		<p style = "text-align:center">
+ 			<a type = "button" class = "btn2" href= "map.html">Continue</a>
+ 		</p>
 	</div>
 	<div id = "startFormDiv">
 		<form id="startGameForm" name="startGameForm" action="index.html" style="text-align:left; font-size:15pt;">
@@ -58,7 +73,7 @@
 			
 			<p style="text-align: center">
 			<input type="button" class="btn2" value="Cancel" onClick="cancelForm(this.form)"/>
-			<input type="submit" class="btn2" value="Start"/></p>
+			<input type="submit" class="btn2" value="Start" onClick = ""/></p>
 		</form> 
 	</div>
 	<div id ="divTimer">10:00</div>
