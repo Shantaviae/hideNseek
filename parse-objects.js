@@ -1,3 +1,7 @@
+
+//Initialize 
+Parse.initialize("aR9gbvkk28bU16g4LDJ6jvLpn4qnEsqqFhllK42y", "JJpfwU0S7FFWqzDSTu67CAmxH3YzyUGRdFyGYGbs");
+
 /* Game object
 Data:
 	gameId: a unique id set when creating a new game (string)
@@ -24,18 +28,15 @@ var Game = Parse.Object.extend("Game", {
 		return this.get("radius");
 	}
 	setTitle: function(title) {
-	//	this.get("title", title);
 		this.set("title",title);
 	},
 	setNumOfPlayers: function(numOfPlayers) {
 		this.set("numOfPlayers", numOfPlayers);
 	},
 	setTimeLimit: function(timeLimit) {
-		//this.get("timeLimit",timeLimit);
 		this.set("timeLimit",timeLimit);
 	},	
 	setRadius: function(radius) {
-		//return this.get("radius",radius);
 		this.set("radius",radius);
 	}
  }, 
@@ -72,19 +73,19 @@ Data:
 */
 var User = Parse.Object.extend("User", {
 	//to prevent front end typo. Wrap up all gets and sets
-	getuserId: function() {
+	getUserId: function() {
 		return this.get("userId");
 	},
-	getisSeeker: function() {
+	getIsSeeker: function() {
 		return this.get("isSeeker");
 	},
 	getGameId: function() {
 		return this.get("gameId");
 	},
-	getlat: function() {
+	getLat: function() {
 		return this.get("lat");
 	},	
-	getlong: function() {
+	getLong: function() {
 		return this.get("long");
 	}
 	setisSeeker: function(isSeeker) {
@@ -118,6 +119,7 @@ var User = Parse.Object.extend("User", {
 		//check the uniqueness of userId
 		var userQuery = new Parse.Query(User);
 		var unique = true;
+		userQuery.equalTo("gameId",gameId);
 		userQuery.equalTo("userId", userId);
 		userQuery.first({
 			success: function() {
