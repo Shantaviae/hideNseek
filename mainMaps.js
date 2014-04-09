@@ -21,7 +21,7 @@ var divSpeed =1000;
 
 
 	//google.maps.event.addDomListener(window, 'load', initialize);
-	function Hider(currentLocation,isTagged,marker){
+	function Hider(ID,currentLocation,isTagged,marker){
 
 		//this.playerName = playerName;
 		//this.startTime = startTime;
