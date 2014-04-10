@@ -25,10 +25,13 @@ function showPage( pageId ) {
 
 // sets height of pages with header at top
 function setHeaderPageContentHeights() {
-	$(".headerPage").each(function(index, element) {
-		var headerHeight = $("#header").height();
-		var totalHeight = $(window).height();
-		$("#"+element.id).height(totalHeight - headerHeight);
+	$(".headerPage").each(function(index) {
+		var headerHeight = $("#header").css("height"); // get overall height including padding
+		headerHeight = Number(headerHeight.substr(0, headerHeight.length-2)); //remove px at end
+		var totalHeight = $(window).height();		// assume 0 padding
+		
+		$(this).css("height", totalHeight - headerHeight);
+		
 	}); 	
 }
 
