@@ -70,10 +70,12 @@ function startGame(){
 	showPage("#mapPage");
 	var timer = document.getElementById('divTimer');
 		timer.innerHTML = "10:00";
-	//myMap = initialize();
+	//myMap = initialize();	
+	
 	handler = setInterval("decrementValue('divTimer')", divSpeed);
 
 	google.maps.event.trigger(myMap, 'resize');
+	makeHiders(seekers[0].currentLocation);
 
 		
 }

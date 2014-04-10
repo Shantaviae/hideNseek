@@ -7,6 +7,7 @@ var mapOptions;
 var curLocation;
 var hiders =  new Array();
 var seekers = new Array();
+var map;
 
 
     $( document ).ready(function() {
@@ -53,22 +54,12 @@ var seekers = new Array();
 
 		};
 	
-		var map = new google.maps.Map(document.getElementById("map-canvas"),
+		map = new google.maps.Map(document.getElementById("map-canvas"),
 			mapOptions);
 
 
-		initializeLocation(map);
-		google.maps.event.addDomListener(map, 'click', function(event){
-			
-			var pos = event.latLng;
-			var len = hiders.length;
-			var hider = new Hider(0,pos,false,addHider(pos,map));
-			hiders.push(hider);
-			hider.ID = window.setInterval(function(){moveHider(hider,map);},1000);
-			//console.log(hiders[0].currentLocation);	  
-			console.log("this is K "+hider.currentLocation.A+"   this is A:"+hider.currentLocation.k+ "\n");
-		});
-
+		initializeLocation(map);			
+			//console.log(hiders[0].currentLocation);	  	
 		// center map on user on resize
 		google.maps.event.addDomListener(map, 'resize', function(event) {
 			initializeLocation(map);
@@ -79,6 +70,31 @@ var seekers = new Array();
 		return map;
 	}
 
+
+	function makeHiders(pos){
+			var posk = pos.k;
+			var posA = pos.A;		
+		
+
+			var pos1 = new google.maps.LatLng(pos.k,pos.A+0.0001);
+			var pos2 = new google.maps.LatLng(pos.k-0.0001,pos.A);
+			var pos3 = new google.maps.LatLng(pos.k,pos.A-0.0001);
+			var pos4 = new google.maps.LatLng(pos.k+0.0001,pos.A);
+
+			var hider1 = new Hider(0,pos1,false,addHider(pos1,map));
+			var hider2 = new Hider(0,pos2,false,addHider(pos2,map));
+			var hider3 = new Hider(0,pos3,false,addHider(pos3,map));
+			var hider4 = new Hider(0,pos4,false,addHider(pos4,map));
+
+			hiders.push(hider1);
+			hiders.push(hider2);
+			hiders.push(hider3);
+			hiders.push(hider4);
+			hider1.ID = window.setInterval(function(){moveHider(hider1,map,"down");},1000);
+			hider2.ID = window.setInterval(function(){moveHider(hider2,map,"up");},1000);
+			hider3.ID = window.setInterval(function(){moveHider(hider3,map,"left");},1000);
+			hider4.ID = window.setInterval(function(){moveHider(hider4,map,"right");},1000);
+	}
 	// Use the DOM setInterval() function to change the offset of the symbol
 	// at fixed intervals.
 
@@ -127,15 +143,33 @@ var seekers = new Array();
 							
 	}
 
-	function moveHider(hider,map){
+	function moveHider(hider,map,action){
 		var marker = hider.marker;
 		var markerLocation = marker.position;
 
 		var lk = markerLocation.k;
 		var lA = markerLocation.A;
 
-			lk = lk + 0.00001;
-			lA = lA + 0.00001;
+
+		switch (action){
+			case "down":
+				 //lk = lk + 0.00001;
+				 lA = lA - 0.00001;
+				 break;
+			case "up":
+				 //lk = lk + 0.00001;
+				 lA = lA + 0.00001;
+				 break;
+			case "left":
+				 lk = lk + 0.00001;
+				 //lA = lA - 0.00001;
+				 break;
+			case "right":
+				 lk = lk - 0.00001;
+				 //lA = lA - 0.00001;
+				 break;
+		}
+			
 
 			var newlocation = new google.maps.LatLng(lk,lA);
 
@@ -232,15 +266,14 @@ var seekers = new Array();
 			}
 		return curLocation;		
 		}
-
-
-
 	function positionHelper(position){
 		var pos  = new google.maps.LatLng(position.coords.latitude,
 				position.coords.longitude);
 			curLocation = pos;
 		
 	}	
+
+	//This is for calculating the average of location data every 5 seconds
 	function collectData(map){
 		if (navigator.geolocation){
 			
@@ -269,7 +302,7 @@ var seekers = new Array();
 	}	
 	}
 
-
+//this is for refreshing the current seeker locations
 	function refreshLocation(user_locations,map){
 		var latitude = 0;
 		var longitude = 0;
