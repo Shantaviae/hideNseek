@@ -111,21 +111,14 @@ function delineate(str)
 function startForm() {
 	clearForm(document.getElementById('startGameForm'));
 	
-	$("#header").show();
-	$("#home").hide();
-	$("#startFormDiv").show();
-	$("#waitPage").hide();
+	showPage("#startFormDiv");
 
 	
 }
 
 function cancelForm(oForm) {
-	$("#header").hide();
-	$("#home").show();
-	$("#startFormDiv").hide();
 	clearForm(oForm);
-	$("#waitPage").hide();
-	
+	showPage("#home");	
 }
 
 
