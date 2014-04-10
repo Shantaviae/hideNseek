@@ -53,33 +53,7 @@ $( document ).ready(function() {
 	setHeaderPageContentHeights();
 	$(window).resize(setHeaderPageContentHeights);
 
-	/*
-	document.startGameForm.gName.value = locate;
-	var gName = document.startGameForm.gName.value;
-	gName = delineate(gName);
-
-	if (gName == null || gName == "") {
-		$("#divTimer").hide();
-		$("#map-canvas").hide();
-		$("#header").hide();
-		$("#startFormDiv").hide();
-		$("#home").show();
-		$("#waitPage").hide();
-	} 
 	
-	else {
-		// $("#divTimer").show();
-		// $("#map-canvas").show();
-		// $("#header").show();
-		// $("#startFormDiv").hide();
-		// $("#home").hide();
-		// $("#waitPage").hide();
-		goToWaitPage();
-		
-		//setTimeout(function(){startGame();},5000);
-		//startGame();
-	}
-	*/
 });
 
 
@@ -90,12 +64,13 @@ function goToHomePage(){
 function goToWaitPage() {
 	
 	showPage("#waitPage");
-	//handler2 = setInterval("decrementValue('divTimer2')", divSpeed);
 }
 
 function startGame(){
 		
 	showPage("#mapPage");
+	var timer = document.getElementById('divTimer');
+		timer.innerHTML = "10:00";
 
 	handler = setInterval("decrementValue('divTimer')", divSpeed);
 
@@ -128,7 +103,7 @@ function cancelForm(oForm) {
 
 function stop(tag) {
     clearInterval(handler);
-    if (tag == false){
+    if (!checktag(hiders)){
 
 		alertify.alert('Time up! You lose!');
         //alert("Time up! You lose!");

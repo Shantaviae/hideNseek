@@ -114,7 +114,7 @@ var seekers = new Array();
 						content :"Got You!"
 					});
 
-					stopTimer(true);
+					
 				}
 				else {
 					var infowindow = new google.maps.InfoWindow({
@@ -169,6 +169,7 @@ var seekers = new Array();
 					var infowindow = new google.maps.InfoWindow({
 						content :"Got You!"
 					});
+					hider.isTagged = true;
 					window.clearInterval(hider.ID);
 				}
 				else {
@@ -333,16 +334,13 @@ var seekers = new Array();
 		 
 		  return Math.sqrt( xs + ys );
 		}
-	
-	function stopTimer(tag) {
-    clearInterval(handler);
-    if (tag == false){
+	function checktag(hiders){
 
-		alertify.alert('Time up! You lose!');
-        //alert("Time up! You lose!");
-    }
-    else{
-		alertify.alert('Congrats! You win!');
-        //alert("Congrats! You win!");
-    }
-}
+		var len = hiders.length;
+		for (var j = 0 ;j<len;j++){
+			if (hiders[j].isTagged == false)
+				return false;
+		}
+		return true;
+	}
+	
