@@ -27,71 +27,75 @@
   
   
   <body>
-  	<div id = "header"> 
-		<div style= "float: left; width: 75%;">
-			<img src="logo1transparent.png" width="70%" alt="Hide-N-Seek Logo"/>
+  	<div id = "contentWrapper">
+	  	<div id = "header"> 
+			<div style= "float: left; width: 75%;">
+				<img src="logo1transparent.png" width="70%" alt="Hide-N-Seek Logo"/>
+			</div>
+			<div style= "float: right; width: 18%;"> 
+				<img src="home2.png" width="60%" alt="Home Icon" onclick="goToHomePage()"/>
+			</div>
 		</div>
-		<div style= "float: right; width: 18%;"> 
-			<a href="http://shantaviae.github.io/hideNseek"><img src="home2.png" width="60%" alt="Home Icon"/></a>
-		</div>
-	</div>
-    <!-- <div id = "map-canvas"> </div> -->
-	<div id = "home" >
-		<img src="logo1transparent.png" width="90%" alt="Hide-N-Seek Logo"/><br/><br/><br/><br/><br/><br/>
-		
-		<input type="button" class="btn" value="Start Game" onClick="goToWaitPage()"/><br/><br/>
- 		<input type="button" class="btn" value="Join Game" onClick="goToWaitPage()"/>
- 	</div>
- 	<div id = "map-canvas"> </div>
- 	<div id = "waitPage"> 
- 		<br/><br/>
- 		<img src="marker_hider.png" alt = "Hider Icon"/> Hider <br/>
- 		<img src="marker_seeker.png" alt = "Seeker Icon"/> Seeker <br/><br/>
- 		
- 		You are the seeker now.<br/><br/>
- 		
- 		<div id="GameRules">
- 			Tap the hider if they are close enough to you in order to win the game!<br/>
- 		</div>
- 		<p style = "text-align:center">
- 			<div type = "button" class = "btn2" onclick="startGame()">Continue</div>
- 		</p>
-	</div>
-	<div id = "startFormDiv">
-		<form id="startGameForm" name="startGameForm" action="index.html" onsubmit="startGame(); return false;" style="text-align:left; font-size:15pt;">
-			<table style="margin:3%; font-size:14pt; width: 93%;">
-				<tr>
-				  <td class="col1" colspan="1" width="70%"></td>
-				  <td class="col2" colspan="1" width="30%"></td>
-				</tr>
-				<tr class="row">
-				  <td colspan="2" style="text-align:center;"><input type="text" class="textbox" name="gName" placeholder="Game Name" style="font-size:16pt; line-height:18pt;"></td>
-				</tr>
-				<tr class="row">
-				  <td class="col1">Start Time:</td>
-				  <td class="col2"><input type="time" class="stextbox" name="sTime" value="10:00:00"></td>
-				</tr>
-				<tr class="row">
-				  <td class="col1">End Time:</td>
-				  <td class="col2"><input type="time" class="stextbox" name="eTime" value="12:00:00"></td>
-				</tr>
-				<tr class="row">
-				  <td class="col1">Max # of Players:</td>
-				  <td class="col2"><input type="textbox" class="ntextbox" name="numPlayers"></td>
-				</tr>
-				<tr class="row">
-				  <td class="col1">Game Radius:</td>
-				  <td class="col2"><input type="textbox" class="ntextbox" name="gRadius"></td>
-				</tr>
-			</table>
+		<div id="home" class="page">
+			<img src="logo1transparent.png" width="90%" alt="Hide-N-Seek Logo"/><br/>
 			
-			<p style="text-align: center">
-			<input type="button" class="btn2" value="Cancel" onClick="cancelForm(this.form)"/>
-			<input type="submit" class="btn2" value="Start" /></p>
-		</form> 
+			<input type="button" class="btn" value="Start Game" onClick="goToWaitPage()"/><br/><br/>
+	 		<input type="button" class="btn" value="Join Game" onClick="goToWaitPage()"/>
+	 	</div>
+	 	<div id="mapPage" class="page">
+	 		<div id = "map-canvas">
+	 		</div> 
+	 		<div id ="divTimer">10:00</div>
+			<!-- Example for how to stop the game/clock for the tag buttons implemented in timer.js
+			<input id="tag" value=" Tag " onclick="javaScript:stop(true);" type="button" /><br/>-->
+	 	</div>
+	 	<div id = "waitPage" class="page"> 
+	 		<br/><br/>
+	 		<img src="marker_hider.png" alt = "Hider Icon"/> Hider <br/>
+	 		<img src="marker_seeker.png" alt = "Seeker Icon"/> Seeker <br/><br/>
+	 		
+	 		You are the seeker now.<br/><br/>
+	 		
+	 		<div id="GameRules">
+	 			Tap the hider if they are close enough to you in order to win the game!<br/>
+	 		</div>
+	 		<p style = "text-align:center">
+	 			<div type = "button" class = "btn2" onclick="startGame()">Continue</div>
+	 		</p>
+		</div>
+		<div id = "startFormDiv" class="page">
+			<form id="startGameForm" name="startGameForm" action="index.html" onsubmit="startGame(); return false;" style="text-align:left; font-size:15pt;">
+				<table style="margin:3%; font-size:14pt; width: 93%;">
+					<tr>
+					  <td class="col1" colspan="1" width="70%"></td>
+					  <td class="col2" colspan="1" width="30%"></td>
+					</tr>
+					<tr class="row">
+					  <td colspan="2" style="text-align:center;"><input type="text" class="textbox" name="gName" placeholder="Game Name" style="font-size:16pt; line-height:18pt;"></td>
+					</tr>
+					<tr class="row">
+					  <td class="col1">Start Time:</td>
+					  <td class="col2"><input type="time" class="stextbox" name="sTime" value="10:00:00"></td>
+					</tr>
+					<tr class="row">
+					  <td class="col1">End Time:</td>
+					  <td class="col2"><input type="time" class="stextbox" name="eTime" value="12:00:00"></td>
+					</tr>
+					<tr class="row">
+					  <td class="col1">Max # of Players:</td>
+					  <td class="col2"><input type="textbox" class="ntextbox" name="numPlayers"></td>
+					</tr>
+					<tr class="row">
+					  <td class="col1">Game Radius:</td>
+					  <td class="col2"><input type="textbox" class="ntextbox" name="gRadius"></td>
+					</tr>
+				</table>
+				
+				<p style="text-align: center">
+				<input type="button" class="btn2" value="Cancel" onClick="cancelForm(this.form)"/>
+				<input type="submit" class="btn2" value="Start" /></p>
+			</form> 
+		</div>
 	</div>
-	<div id ="divTimer">10:00</div>
-	<!-- Example for how to stop the game/clock for the tag buttons implemented in timer.js
-	<input id="tag" value=" Tag " onclick="javaScript:stop(true);" type="button" /><br/>-->
   </body>
 </html>

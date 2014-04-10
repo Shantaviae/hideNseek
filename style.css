@@ -12,12 +12,29 @@ body {
 	background-color: #74AFAD;
 }
 
-#map-canvas { 
-	height: 94%;
-	padding: 0%;
-	margin: 0%;
-	position: center;
+div {
+  -webkit-box-sizing: border-box; 	/* Android ≤ 2.3, iOS ≤ 4 */
+  -moz-box-sizing: border-box; 		/* Firefox 1+ */
+  box-sizing: border-box; 			/* Chrome, IE 8+, Opera, Safari 5.1 */
 }
+
+
+#contentWrapper {
+	display: block;
+	position: relative;
+	overflow: hidden;
+	height: 100%;
+	width: 100%;
+}
+
+.page {
+	display: block;
+	position: relative;
+	overflow: hidden;
+	height: 100%;
+	width: 100%;
+}
+
 
 #header{
 	height: 40px;
@@ -34,8 +51,33 @@ body {
 
 #home {
 	text-align:center;
-	margin-top:45%;
+	margin-top:25%;
+}
+
+#waitPage {
+	text-align: center;
+	padding: 10%;
+	color: #FFFFFF;
+	font-size: 18pt;
+	
+}
+
+#startFormDiv {
+	padding-top: 10%;
+	text-align: center;
+	color: #FFFFFF;
+	font-family: 'Ubuntu', sans-serif;
+	font-size: 14pt;
+}
+
+#mapPage {
+	padding: 0px;
+}
+
+#map-canvas { 
 	height: 100%;
+	padding: 0%;
+	margin: 0%;
 }
 
 #divTimer{
@@ -95,14 +137,6 @@ body {
   text-decoration: none;
 }
 
-#startFormDiv {
-	margin-top: 10%;
-	text-align: center;
-	color: #FFFFFF;
-	font-family: 'Ubuntu', sans-serif;
-	font-size: 14pt;
-}
-
 .textbox { 
 
     border: none; 
@@ -147,13 +181,6 @@ body {
 	height:50px;
 }
 
-#waitPage {
-	text-align: center;
-	margin: 10%;
-	color: #FFFFFF;
-	font-size: 18pt;
-	
-}
 
 #divTimer2{
 	color: #ECECEA;

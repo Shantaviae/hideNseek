@@ -11,6 +11,20 @@ var status;
 
 var myMap;
 
+var currentView = "#home";	// which page is currently being shown
+
+
+
+function showPage( pageId ) {
+	if (pageId !== currentView) {
+		$(pageId).show();			// show new page
+		$(currentView).hide();	// hide current page
+		currentView = pageId;		// update current page
+	}	
+}
+
+
+
 $( document ).ready(function() {
 
 	var locate = window.location;
@@ -18,13 +32,15 @@ $( document ).ready(function() {
 	// Initialize map
 	myMap = initialize();
 	
-	// $("#header").hide();
-	// $("#home").show();
-	// $("#divTimer").hide();
-	// $("#map-canvas").hide();
-	// $("#waitPage").hide();
-	// $("#startFormDiv").hide();
-	// $("#divTimer").hide();
+	$("#header").show();
+	$("#home").show();
+	//$("#divTimer").hide();
+	$("#mapPage").hide();
+	$("#waitPage").hide();
+	$("#startFormDiv").hide();
+	//$("#divTimer").hide();
+
+	/*
 	document.startGameForm.gName.value = locate;
 	var gName = document.startGameForm.gName.value;
 	gName = delineate(gName);
@@ -50,38 +66,27 @@ $( document ).ready(function() {
 		//setTimeout(function(){startGame();},5000);
 		//startGame();
 	}
+	*/
 });
-function start(){
-		$("#divTimer").hide();
-		//$("#map-canvas").hide();
-		$("#header").hide();
-		$("#startFormDiv").hide();
-		$("#home").show();
-		$("#waitPage").hide();
 
 
+function goToHomePage(){
+	showPage("#home");
 }
+
 function goToWaitPage() {
 	
-	$("#waitPage").show();
-	$("#divTimer").hide();
-	//$("#map-canvas").hide();
-	$("#header").show();
-	$("#startFormDiv").hide();
-	$("#home").hide();
+	showPage("#waitPage");
 	//handler2 = setInterval("decrementValue('divTimer2')", divSpeed);
 }
 
 function startGame(){
-		$("#divTimer").show();
-		$("#map-canvas").show();
-		$("#header").show();
-		$("#startFormDiv").hide();
-		$("#home").hide();
-		$("#waitPage").hide();
-		handler = setInterval("decrementValue('divTimer')", divSpeed);
+		
+	showPage("#mapPage");
 
-		google.maps.event.trigger(myMap, 'resize');
+	handler = setInterval("decrementValue('divTimer')", divSpeed);
+
+	google.maps.event.trigger(myMap, 'resize');
 
 		
 }
