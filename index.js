@@ -114,9 +114,11 @@ function cancelForm(oForm) {
 }
 
 
+
 function stop(tag) {
     clearInterval(handler);
     if (tag == false){
+
 		alertify.alert('Time up! You lose!');
         //alert("Time up! You lose!");
     }

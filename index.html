@@ -15,14 +15,22 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	
 	<script type="text/javascript" src="alertify.min.js"></script>
-	<script type="text/javascript" src = "mainMaps.js"></script>
 	<script type="text/javascript" src = "index.js"></script>
+	<script type="text/javascript" src = "mainMaps.js"></script>
+	
    
   </head>
   
   
   <body>
-  	<div id = "header"> <img src="logo1transparent.png" width="50%" style="margin-top:2%" alt="Hide-N-Seek Logo"/> </div>
+  	<div id = "header"> 
+		<div style= "float: left; width: 80%;">
+			<img src="logo1transparent.png" width="70%" alt="Hide-N-Seek Logo"/>
+		</div>
+		<div style= "float: right; width: 20%;"> 
+			<a href="http://shantaviae.github.io/hideNseek"><img src="home2.png" width="60%" alt="Home Icon"/></a>
+		</div>
+	</div>
     <!-- <div id = "map-canvas"> </div> -->
 	<div id = "home" >
 		<img src="logo1transparent.png" width="90%" alt="Hide-N-Seek Logo"/><br/><br/><br/><br/><br/><br/>
@@ -78,7 +86,7 @@
 			<input type="submit" class="btn2" value="Start" /></p>
 		</form> 
 	</div>
-	<div id ="divTimer">10:00</div>
+	<div id ="divTimer">00:05</div>
 	<!-- Example for how to stop the game/clock for the tag buttons implemented in timer.js
 	<input id="tag" value=" Tag " onclick="javaScript:stop(true);" type="button" /><br/>-->
   </body>

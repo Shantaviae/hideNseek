@@ -20,7 +20,7 @@ body {
 }
 
 #header{
-	height: 8%;
+	height: 40px;
 	width: 100%;
 	color: white;
 	padding-top: 1%;
@@ -29,6 +29,7 @@ body {
 	text-align: center;
 	background-color: #74AFAD;
 	font-weight: bold;
+	margin-top:5px;
 }
 
 #home {
