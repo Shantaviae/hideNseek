@@ -222,7 +222,9 @@ var seekers = new Array();
 		
 		if (navigator.geolocation){
 			
-		navigator.geolocation.getCurrentPosition(positionHelper,showError);
+		navigator.geolocation.getCurrentPosition(positionHelper,function(){
+				handleNoGeolocation(true);
+		});	
 		 }
 			else {
 				// Browser doesn't support Geolocation
@@ -257,12 +259,14 @@ var seekers = new Array();
 				}
 				i  = (i+1) % 5;
 		//========================================================	
-	},showError);
+	},function(){
+		handleNoGeolocation(true);
+	});
 	}
 	else {
 		// Browser doesn't support Geolocation
-		alert("Browser doesn't support Geolocation");
-	}
+		handleNoGeolocation(false);
+	}	
 	}
 
 

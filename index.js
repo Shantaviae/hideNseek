@@ -66,12 +66,11 @@ function goToWaitPage() {
 	showPage("#waitPage");
 }
 
-function startGame(){
-		
+function startGame(){	
 	showPage("#mapPage");
 	var timer = document.getElementById('divTimer');
 		timer.innerHTML = "10:00";
-
+	//myMap = initialize();
 	handler = setInterval("decrementValue('divTimer')", divSpeed);
 
 	google.maps.event.trigger(myMap, 'resize');
@@ -198,3 +197,10 @@ function clearForm(oForm) {
   }
     }
 }
+
+Array.prototype.clear = function() {
+  while (this.length > 0) {
+  	//this.marker.setMap(null);
+    this.pop();
+  }
+};
