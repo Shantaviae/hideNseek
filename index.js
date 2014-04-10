@@ -14,7 +14,7 @@ var myMap;
 var currentView = "#home";	// which page is currently being shown
 
 
-
+// switches which page is currently viewed
 function showPage( pageId ) {
 	if (pageId !== currentView) {
 		$(pageId).show();			// show new page
@@ -23,6 +23,14 @@ function showPage( pageId ) {
 	}	
 }
 
+// sets height of pages with header at top
+function setHeaderPageContentHeights() {
+	$(".headerPage").each(function(index, element) {
+		var headerHeight = $("#header").height();
+		var totalHeight = $(window).height();
+		$("#"+element.id).height(totalHeight - headerHeight);
+	}); 	
+}
 
 
 $( document ).ready(function() {
@@ -31,14 +39,16 @@ $( document ).ready(function() {
 
 	// Initialize map
 	myMap = initialize();
-	
+
+	// Initialize home page as shown
 	$("#header").show();
 	$("#home").show();
-	//$("#divTimer").hide();
 	$("#mapPage").hide();
 	$("#waitPage").hide();
 	$("#startFormDiv").hide();
-	//$("#divTimer").hide();
+	// Dynamically size pages with header
+	setHeaderPageContentHeights();
+	$(window).resize(setHeaderPageContentHeights);
 
 	/*
 	document.startGameForm.gName.value = locate;

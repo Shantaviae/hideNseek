@@ -12,6 +12,7 @@ body {
 	background-color: #74AFAD;
 }
 
+/* make padding part of overall width */
 div {
   -webkit-box-sizing: border-box; 	/* Android ≤ 2.3, iOS ≤ 4 */
   -moz-box-sizing: border-box; 		/* Firefox 1+ */
@@ -27,20 +28,30 @@ div {
 	width: 100%;
 }
 
-.page {
+.fullScreenPage {
 	display: block;
-	position: relative;
+	position: absolute;
+	top: 0px;
 	overflow: hidden;
 	height: 100%;
 	width: 100%;
 }
 
+.headerPage {
+	display: block;
+	position: relative; /* so starts below header */
+	overflow: hidden;
+	height: 100%;		/* will need to be corrected dynamically by javascript */
+	width: 100%;
+}
+
 
 #header{
-	height: 40px;
+	height: 45px;
 	width: 100%;
 	color: white;
 	padding-top: 5px;
+	padding-bottom: 5px;
 	font-size: 18pt;
 	line-height: 20pt;
 	text-align: center;
@@ -51,7 +62,8 @@ div {
 
 #home {
 	text-align:center;
-	margin-top:25%;
+	padding-top:25%;
+	background-color: #74AFAD;
 }
 
 #waitPage {
