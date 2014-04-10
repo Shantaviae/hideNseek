@@ -114,7 +114,7 @@ var seekers = new Array();
 						content :"Got You!"
 					});
 
-					stop(true);
+					stopTimer(true);
 				}
 				else {
 					var infowindow = new google.maps.InfoWindow({
@@ -334,4 +334,15 @@ var seekers = new Array();
 		  return Math.sqrt( xs + ys );
 		}
 	
-	
+	function stopTimer(tag) {
+    clearInterval(handler);
+    if (tag == false){
+
+		alertify.alert('Time up! You lose!');
+        //alert("Time up! You lose!");
+    }
+    else{
+		alertify.alert('Congrats! You win!');
+        //alert("Congrats! You win!");
+    }
+}
