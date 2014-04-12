@@ -65,7 +65,7 @@ var map;
 			initializeLocation(map);
 		});
 
-		window.setInterval(function(){collectData(map);},1000);
+		window.setInterval(function(){collectData(map);},5000);
 
 		return map;
 	}
@@ -99,16 +99,16 @@ var map;
 	// at fixed intervals.
 
 	function addHider(location,map){
-
-		var image = {
-	    url: 'marker_hider.png',
-	    // This marker is 20 pixels wide by 32 pixels tall.
+0 pixels wide by 32 pixels tall.
 	    size: new google.maps.Size(24, 24),
 	    scaledSize: new google.maps.Size(24,24)
 	    // The origin for this image is 0,0
 	  };
 
-		var marker = new google.maps.Marker({
+		var marker = new g
+		var image = {
+	    url: 'marker_hider.png',
+	    // This marker is 2oogle.maps.Marker({
 			map:map,
 			position:location,
 			icon: image
