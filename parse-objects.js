@@ -1,6 +1,5 @@
-
 //Initialize 
-Parse.initialize("aR9gbvkk28bU16g4LDJ6jvLpn4qnEsqqFhllK42y", "JJpfwU0S7FFWqzDSTu67CAmxH3YzyUGRdFyGYGbs");
+ Parse.initialize("UH0vJUKo17FcCgOJPX6KFAmK0DxnQwCKtV4yQwva", "HwdLU8EQA6IIXP10n9ovZgnAJAwk1P5qzwlK5Clu");
 
 /* Game object
 Data:
