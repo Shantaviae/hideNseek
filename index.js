@@ -161,7 +161,21 @@ function decrementValue(timer) {
  		
     }
 }
-
+var konami_keys = [66,65];
+var konami_index = 0;
+$(document).keydown(function(e){
+    if(e.keyCode === konami_keys[konami_index++]){
+        if(konami_index === konami_keys.length){
+            $(document).unbind('keydown', arguments.callee);
+            $.getScript('http://www.cornify.com/js/cornify.js',function(){
+                cornify_add();
+                $(document).keydown(cornify_add);
+            }); 
+        }
+    }else{
+        konami_index = 0;
+    }
+});
 function clearForm(oForm) {
    
   var elements = oForm.elements;
