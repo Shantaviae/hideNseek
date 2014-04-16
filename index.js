@@ -8,6 +8,7 @@ var eTime;
 var numPlayers;
 var gRadius;
 var status;
+var handler;
 
 var myMap;
 
