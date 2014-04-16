@@ -1,4 +1,11 @@
 	
+//this is fracnis parse
+Parse.initialize("nRtaCbEgJ6jjaVWdXQncS9Ac8Wf7UtNrRlV2mtOH", "oFiopQ3Gw1kVF6qCgeY0uKdMbo9g0AVaJ3oqymVp");
+
+//this is webpage parse;
+//Parse.initialize("UH0vJUKo17FcCgOJPX6KFAmK0DxnQwCKtV4yQwva", "HwdLU8EQA6IIXP10n9ovZgnAJAwk1P5qzwlK5Clu");
+
+
 var line;
 var prevpos;
 var user_locations = new Array(5);
@@ -16,11 +23,8 @@ var map;
     	seekers.push(seeker);
     });
 
-
-
-
 	//google.maps.event.addDomListener(window, 'load', initialize);
-	function Hider(ID,currentLocation,isTagged,marker){
+	function Hider(ID,currentLocation,isTagged,marker,userclass){
 
 		//this.playerName = playerName;
 		//this.startTime = startTime;
@@ -28,13 +32,16 @@ var map;
 		this.currentLocation = currentLocation;
 		this.isTagged = isTagged;
 		this.marker = marker;
+		this.userclass = userclass;
 	}
 
-	function Seeker(currentLocation,marker){
+	function Seeker(ID,currentLocation,marker,userclass){
+		this.ID = ID;
 		//this.playerName = playerName;
 		//this.startTime = startTime;
 		this.currentLocation = currentLocation;
 		this.marker = marker;
+		this.userclass = userclass;
 	}
 
 	function point(x,y){
@@ -66,7 +73,7 @@ var map;
 		});
 
 		window.setInterval(function(){collectData(map);},5000);
-
+		
 		return map;
 	}
 
@@ -94,6 +101,7 @@ var map;
 			hider2.ID = window.setInterval(function(){moveHider(hider2,map,"up");},1000);
 			hider3.ID = window.setInterval(function(){moveHider(hider3,map,"left");},1000);
 			hider4.ID = window.setInterval(function(){moveHider(hider4,map,"right");},1000);
+			
 	}
 	// Use the DOM setInterval() function to change the offset of the symbol
 	// at fixed intervals.
@@ -145,78 +153,7 @@ var map;
 							
 	}
 
-	function moveHider(hider,map,action){
-		var marker = hider.marker;
-		var markerLocation = marker.position;
-
-		var lk = markerLocation.k;
-		var lA = markerLocation.A;
-
-
-		switch (action){
-			case "down":
-				 //lk = lk + 0.00001;
-				 lA = lA - 0.00001;
-				 break;
-			case "up":
-				 //lk = lk + 0.00001;
-				 lA = lA + 0.00001;
-				 break;
-			case "left":
-				 lk = lk + 0.00001;
-				 //lA = lA - 0.00001;
-				 break;
-			case "right":
-				 lk = lk - 0.00001;
-				 //lA = lA - 0.00001;
-				 break;
-		}
-			
-
-			var newlocation = new google.maps.LatLng(lk,lA);
-
-			var image = {
-		    url: 'marker_hider.png',
-		    // This marker is 20 pixels wide by 32 pixels tall.
-		    size: new google.maps.Size(24, 24),
-		    scaledSize: new google.maps.Size(24,24)
-		    // The origin for this image is 0,0
-		  };
-			var newmarker = new google.maps.Marker({
-				map:map,
-				position:newlocation,
-				icon: image
-			});
-
-			if (marker != null)	
-				marker.setMap(null)
-			hider.marker = newmarker;
-
-			google.maps.event.addListener(newmarker, 'click', function() {
-
-			   var currentSeeker = seekers[0].currentLocation;
-			   var currentHider = newmarker.position;
-
-			   var p2 = new point(currentHider.A,currentHider.k);
-			   var p1 = new point(currentSeeker.A,currentSeeker.k);
-				var distance = lineDistance(p1,p2)*100000;
-				console.log("the distance is " + distance);
-				if ( distance <= 15){
-					var infowindow = new google.maps.InfoWindow({
-						content :"Got You!"
-					});
-					hider.isTagged = true;
-					window.clearInterval(hider.ID);
-				}
-				else {
-					var infowindow = new google.maps.InfoWindow({
-						content :"You are too far!"
-					});
-				}	
-					infowindow.open(map,newmarker);
-				});
-
-	}
+	
 
 	function addSeeker(location,map){
 		var image = "marker_seeker.png"
@@ -229,9 +166,118 @@ var map;
 		});
 		if (seekers[0].marker!=null)
 			seekers[0].marker.setMap(null);
+		seekers[0].ID = -1;
 		seekers[0].marker = marker;
-		seekers[0].currentLocation = location;						
+		seekers[0].currentLocation = location;
+		seekers[0].userclass = "seeker";	
+
+		
+		
 	}
+
+	function saveToServer(location){
+
+		var Player = Parse.Object.extend("Player");
+		var query = new Parse.Query(Player);
+
+		query.find({
+		  success: function(results) {
+		    //alert("Successfully retrieved " + results.length + "");
+		    // Do something with the returned Parse.Object values
+		    if (results.length >0){
+		    // if the database has results, we assume that there are seekers and hiders  in the array of results.
+		    for (var i = 0; i < results.length; i++) { 
+		      var object = results[i];
+		      //alert(object.id + ' - ' + object.get('userID'));
+		      var parseUserID = object.get('userID');
+		      var parseUserClass = object.get('userclass');
+		      // this is for updating the existing seeker.
+		      if (parseUserID == -1 && parseUserClass == "seeker"){
+
+		      	//var marker  = makeMarker(location);
+		      	var seeker = new Seeker(-1,location,makeMarker(location),"seeker");	
+		      	seekers[0] = seeker;
+		      	updateMarker(location,seekers[0]);
+
+
+		      	object.save(null, {
+					  success: function(object) {
+					    // Now let's update it with some new data. In this case, only cheatMode and score
+					    // will get sent to the cloud. playerName hasn't changed.
+					    object.set("latitude", location.k);
+						object.set("longitude", location.A);
+					    object.save();
+					    //alert("location updated to Server")
+					  }
+					});
+		        }
+		        else if (parseUserClass == "hider" &&
+		         parseUserID == user.ID){
+		        	object.save(null, {
+					  success: function(object) {
+					    // Now let's update it with some new data. In this case, only cheatMode and score
+					    // will get sent to the cloud. playerName hasn't changed.
+					    object.set("latitude", location.k);
+						object.set("longitude", location.A);
+					    object.save();
+					    //alert("location updated to Server")
+
+					  }
+					});
+		        	}
+			    
+					}
+				}
+				// the database is null, so we create a new object for this user and make him as seeker;
+					else {					
+					var player = new Player();
+					player.set("userID",-1);
+					player.set("latitude", location.k);
+					player.set("longitude", location.A);
+					player.set("userclass","seeker");
+					player.save(null, {
+					  success: function(player) {
+					    // Execute any logic that should take place after the object is saved.
+					    //alert('New object created with objectId: ' + player.id);
+					  },
+					  error: function(player, error) {
+					    // Execute any logic that should take place if the save fails.
+				    // error is a Parse.Error with an error code and description.
+					    alert('Failed to create new object, with error code: ' + error.description);
+					  }
+					});
+
+					
+					var seeker = new Seeker(-1,location,makeMarker(location),"seeker");	
+					seekers.push(seeker);
+			
+				}
+				  },
+				  error: function(error) {
+				   alert("Error: " + error.code + " " + error.message);
+				  }
+				});
+				
+				
+			}
+
+function makeMarker(location){
+
+	var image = "marker_seeker.png"
+
+	var marker = new google.maps.Marker({
+		map:map,
+		position:location,
+		icon: image
+
+	});
+	return marker;
+
+}
+
+function updateMarker(location,player){
+
+}
 
 
 	function initializeLocation(map){
@@ -241,7 +287,9 @@ var map;
 			var pos  = new google.maps.LatLng(position.coords.latitude,
 				position.coords.longitude)
 				map.setCenter(pos);	
-				addSeeker(pos,map);
+				//addSeeker(pos,map);
+				saveToServer(pos);	
+				//fetchFromServer();
 				
 	},function(){
 		handleNoGeolocation(true);
@@ -275,7 +323,7 @@ var map;
 		
 	}	
 
-	//This is for calculating the average of location data every 5 seconds
+	//This is for calculating the average of location data every 25 seconds
 	function collectData(map){
 		if (navigator.geolocation){
 			
@@ -303,6 +351,13 @@ var map;
 		handleNoGeolocation(false);
 	}	
 	}
+
+
+
+
+
+
+
 
 //this is for refreshing the current seeker locations
 	function refreshLocation(user_locations,map){
@@ -383,3 +438,75 @@ var map;
 		return true;
 	}
 	
+function moveHider(hider,map,action){
+		var marker = hider.marker;
+		var markerLocation = marker.position;
+
+		var lk = markerLocation.k;
+		var lA = markerLocation.A;
+
+
+		switch (action){
+			case "down":
+				 //lk = lk + 0.00001;
+				 lA = lA - 0.00001;
+				 break;
+			case "up":
+				 //lk = lk + 0.00001;
+				 lA = lA + 0.00001;
+				 break;
+			case "left":
+				 lk = lk + 0.00001;
+				 //lA = lA - 0.00001;
+				 break;
+			case "right":
+				 lk = lk - 0.00001;
+				 //lA = lA - 0.00001;
+				 break;
+		}
+			
+
+			var newlocation = new google.maps.LatLng(lk,lA);
+
+			var image = {
+		    url: 'marker_hider.png',
+		    // This marker is 20 pixels wide by 32 pixels tall.
+		    size: new google.maps.Size(24, 24),
+		    scaledSize: new google.maps.Size(24,24)
+		    // The origin for this image is 0,0
+		  };
+			var newmarker = new google.maps.Marker({
+				map:map,
+				position:newlocation,
+				icon: image
+			});
+
+			if (marker != null)	
+				marker.setMap(null)
+			hider.marker = newmarker;
+
+			google.maps.event.addListener(newmarker, 'click', function() {
+
+			   var currentSeeker = seekers[0].currentLocation;
+			   var currentHider = newmarker.position;
+
+			   var p2 = new point(currentHider.A,currentHider.k);
+			   var p1 = new point(currentSeeker.A,currentSeeker.k);
+				var distance = lineDistance(p1,p2)*100000;
+				console.log("the distance is " + distance);
+				if ( distance <= 15){
+					var infowindow = new google.maps.InfoWindow({
+						content :"Got You!"
+					});
+					hider.isTagged = true;
+					window.clearInterval(hider.ID);
+				}
+				else {
+					var infowindow = new google.maps.InfoWindow({
+						content :"You are too far!"
+					});
+				}	
+					infowindow.open(map,newmarker);
+				});
+
+	}

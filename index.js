@@ -64,6 +64,7 @@ function goToHomePage(){
 function goToWaitPage() {
 	
 	showPage("#waitPage");
+
 }
 
 function startGame(){	
@@ -75,8 +76,9 @@ function startGame(){
 	handler = setInterval("decrementValue('divTimer')", divSpeed);
 
 	google.maps.event.trigger(myMap, 'resize');
-	makeHiders(seekers[0].currentLocation);
-
+	//makeHiders(seekers[0].currentLocation);
+	//saveToServer(user);
+	//fetchFromServer();
 		
 }
 
