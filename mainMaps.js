@@ -28,6 +28,48 @@ var map;
 		this.currentLocation = currentLocation;
 		this.isTagged = isTagged;
 		this.marker = marker;
+
+		// closure variable to bind click event to this hider
+		var hider = this;
+
+		//==================This is for tapping hiders===================//		
+		google.maps.event.addListener(this.marker, 'click', function() {
+
+			var currentSeeker = seekers[0].currentLocation;
+			var currentHider = marker.position;
+
+			var p2 = new point(currentHider.A,currentHider.k);
+		  	var p1 = new point(currentSeeker.A,currentSeeker.k);
+			var distance = lineDistance(p1,p2)*100000;
+			console.log("the distance is " + distance);
+			if ( distance <= 15){
+				var infowindow = new google.maps.InfoWindow({
+					content :"Got You!"
+				});
+
+				hider.isTagged = true;
+                window.clearInterval(hider.ID);
+                if (allPlayersTagged()) {
+                	gameTimer.stop();
+                }
+				
+			}
+			else {
+				var infowindow = new google.maps.InfoWindow({
+					content :"You are too far!"
+				});
+			}	
+
+			infowindow.open(map,marker);
+		});
+	}
+
+	function allPlayersTagged() {
+		var result = true;
+		for (var i=0; i < hiders.length; i++) {
+			result = result && hiders[i].isTagged;
+		}
+		return result;
 	}
 
 	function Seeker(currentLocation,marker){
@@ -99,48 +141,23 @@ var map;
 	// at fixed intervals.
 
 	function addHider(location,map){
-	var image = {
-	    url: 'marker_hider.png',
-	    // This marker is 20 pixels wide by 32 pixels tall.
-	    size: new google.maps.Size(24, 24),
-	    scaledSize: new google.maps.Size(24,24)
-	    // The origin for this image is 0,0
-	  };
+		var image = {
+	    	url: 'marker_hider.png',
+	    	// This marker is 20 pixels wide by 32 pixels tall.
+	    	size: new google.maps.Size(24, 24),
+	    	scaledSize: new google.maps.Size(24,24)
+	    	// The origin for this image is 0,0
+	  	};
 
 		var marker = new google.maps.Marker({
-		
-	    url: 'marker_hider.png',
-	    // This marker is 2oogle.maps.Marker({
+			url: 'marker_hider.png',
+	    	// This marker is 2oogle.maps.Marker({
 			map:map,
 			position:location,
 			icon: image
 
 		});
 
-//==================This is for tapping hiders===================//		
-		google.maps.event.addListener(marker, 'click', function() {
-
-			   var currentSeeker = seekers[0].currentLocation;
-			   var currentHider = marker.position;
-
-			   var p2 = new point(currentHider.A,currentHider.k);
-			   var p1 = new point(currentSeeker.A,currentSeeker.k);
-				var distance = lineDistance(p1,p2)*100000;
-				console.log("the distance is " + distance);
-				if ( distance <= 15){
-					var infowindow = new google.maps.InfoWindow({
-						content :"Got You!"
-					});
-
-					
-				}
-				else {
-					var infowindow = new google.maps.InfoWindow({
-						content :"You are too far!"
-					});
-				}	
-					infowindow.open(map,marker);
-				});
 		return marker;
 							
 	}
@@ -174,47 +191,7 @@ var map;
 			
 
 			var newlocation = new google.maps.LatLng(lk,lA);
-
-			var image = {
-		    url: 'marker_hider.png',
-		    // This marker is 20 pixels wide by 32 pixels tall.
-		    size: new google.maps.Size(24, 24),
-		    scaledSize: new google.maps.Size(24,24)
-		    // The origin for this image is 0,0
-		  };
-			var newmarker = new google.maps.Marker({
-				map:map,
-				position:newlocation,
-				icon: image
-			});
-
-			if (marker != null)	
-				marker.setMap(null)
-			hider.marker = newmarker;
-
-			google.maps.event.addListener(newmarker, 'click', function() {
-
-			   var currentSeeker = seekers[0].currentLocation;
-			   var currentHider = newmarker.position;
-
-			   var p2 = new point(currentHider.A,currentHider.k);
-			   var p1 = new point(currentSeeker.A,currentSeeker.k);
-				var distance = lineDistance(p1,p2)*100000;
-				console.log("the distance is " + distance);
-				if ( distance <= 15){
-					var infowindow = new google.maps.InfoWindow({
-						content :"Got You!"
-					});
-					hider.isTagged = true;
-					window.clearInterval(hider.ID);
-				}
-				else {
-					var infowindow = new google.maps.InfoWindow({
-						content :"You are too far!"
-					});
-				}	
-					infowindow.open(map,newmarker);
-				});
+			marker.setPosition(newlocation);
 
 	}
 
@@ -237,21 +214,19 @@ var map;
 	function initializeLocation(map){
 		if (navigator.geolocation){
 			
-		navigator.geolocation.getCurrentPosition(function(position){
-			var pos  = new google.maps.LatLng(position.coords.latitude,
-				position.coords.longitude)
-				map.setCenter(pos);	
-				addSeeker(pos,map);
-				
-	},function(){
-		handleNoGeolocation(true);
-	});
-	}
-
-	else {
-		// Browser doesn't support Geolocation
-		handleNoGeolocation(false);
-	}	
+			navigator.geolocation.getCurrentPosition(function(position){
+				var pos  = new google.maps.LatLng(position.coords.latitude,
+					position.coords.longitude)
+					map.setCenter(pos);	
+					addSeeker(pos,map);
+					
+			},function(){
+				handleNoGeolocation(true);
+			});
+		} else {
+			// Browser doesn't support Geolocation
+			handleNoGeolocation(false);
+		}	
 	}
 
 	function getUserLocation(){

@@ -1,7 +1,4 @@
-
-
-var divSpeed = 100;
-var tag, timeNum;
+var gameTimer; 
 var gName;
 var sTime;
 var eTime;
@@ -44,6 +41,15 @@ $( document ).ready(function() {
 	// Initialize map
 	myMap = initialize();
 
+	// Initialize timers
+	gameTimer = new Timer(600); 	// ten minutes of gametime
+	gameTimer.setSpeed(10);		// ten times faster than real life
+	gameTimer.onTimeOut(stop);
+	gameTimer.onStop(stop);
+	gameTimer.onTick(function(curTime) {
+		document.getElementById("divTimer").innerHTML = gameTimer.toString(curTime);
+	});
+
 	// Initialize home page as shown
 	$("#header").show();
 	$("#home").show();
@@ -69,11 +75,8 @@ function goToWaitPage() {
 
 function startGame(){	
 	showPage("#mapPage");
-	var timer = document.getElementById('divTimer');
-		timer.innerHTML = "10:00";
+	gameTimer.start();
 	//myMap = initialize();	
-	
-	handler = setInterval("decrementValue('divTimer')", divSpeed);
 
 	google.maps.event.trigger(myMap, 'resize');
 	makeHiders(seekers[0].currentLocation);
@@ -103,10 +106,8 @@ function cancelForm(oForm) {
 
 
 
-function stop(tag) {
-    clearInterval(handler);
+function stop() {
     if (!checktag(hiders)){
-
 		alertify.alert('Time up! You lose!');
         //alert("Time up! You lose!");
     }
@@ -116,52 +117,7 @@ function stop(tag) {
     }
 }
 
-function parseTimer(timer) {
-    var time = document.getElementById(timer).innerHTML;
-    var times = time.split(":");
-    var cTime = parseInt(times[0], 10)*60 + parseInt(times[1], 10);
-    return cTime;
-}
 
-function revertTime(timeNum) {
-    var seconds = timeNum % 60;
-    var minutes = (timeNum - seconds) / 60;
-	
-	var pTime;
-	
-	if (seconds < 10) {
-		pTime = minutes + ":0" + seconds;
-	}
-	if (minutes < 10) {
-		pTime = "0" + minutes + ":" + seconds;
-	}
-	if (minutes < 10 & seconds < 10) {
-		pTime = "0" + minutes + ":0" + seconds;
-	}
-	if (minutes >= 10 & seconds >= 10) {
-		pTime = minutes + ":" + seconds;
-	}
-	
-    return pTime;
-}
-
-
-
-function decrementValue(timer) {
- 	var timer;
-     var curTime = parseTimer(timer);
-    if ( curTime > 0){
-        
-        curTime = curTime - 1;
-        document.getElementById(timer).innerHTML = revertTime(curTime);
-    }
-    else 
-    {
-        
- 			stop(false);
- 		
-    }
-}
 var konami_keys = [66,65];
 var konami_index = 0;
 $(document).keydown(function(e){
