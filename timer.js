@@ -54,6 +54,8 @@ var Timer = function(time) {
 		ttl = time/1000;
 	}
 
+	// ratio = 1 => real time
+	// ratio < 1 => slower, ratio > 1 => faster
 	this.setSpeed = function(ratio) {
 		if (ratio > 0 && ratio < 1000) {
 			increment = 1000 / ratio;		// one second divied by the ratio of fake time to real time

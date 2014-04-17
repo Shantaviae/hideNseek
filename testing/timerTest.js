@@ -28,7 +28,12 @@ window.onload = function() {
 	});
 
 
-	timer.setSpeed(10);
+	timer.setSpeed(1);
 	timer.start();
 
 }
+
+
+
+
+

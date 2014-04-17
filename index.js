@@ -36,8 +36,6 @@ function setHeaderPageContentHeights() {
 
 $( document ).ready(function() {
 
-	var locate = window.location;
-
 	// Initialize map
 	myMap = initialize();
 
@@ -84,13 +82,6 @@ function startGame(){
 		
 }
 
-function delineate(str)
-{
-	var theleft = str.indexOf("=") + 1;
-	var theright = str.indexOf("&");
-	return(str.substring(theleft, theright));
-}
-
 function startForm() {
 	clearForm(document.getElementById('startGameForm'));
 	
@@ -119,6 +110,7 @@ function stop() {
 }
 
 
+// This is for UNICORNS!!!!
 var konami_keys = [66,65];
 var konami_index = 0;
 $(document).keydown(function(e){
@@ -134,6 +126,9 @@ $(document).keydown(function(e){
         konami_index = 0;
     }
 });
+
+// start real stuff again....
+
 function clearForm(oForm) {
    
   var elements = oForm.elements;
