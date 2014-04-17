@@ -1,19 +1,102 @@
 
+// Jingcheng
+//Parse.initialize("UH0vJUKo17FcCgOJPX6KFAmK0DxnQwCKtV4yQwva", "HwdLU8EQA6IIXP10n9ovZgnAJAwk1P5qzwlK5Clu");
 
-Parse.initialize("UH0vJUKo17FcCgOJPX6KFAmK0DxnQwCKtV4yQwva", "HwdLU8EQA6IIXP10n9ovZgnAJAwk1P5qzwlK5Clu");
+// Francis
+Parse.initialize("nRtaCbEgJ6jjaVWdXQncS9Ac8Wf7UtNrRlV2mtOH", "oFiopQ3Gw1kVF6qCgeY0uKdMbo9g0AVaJ3oqymVp");
 
-function test()
-{
 
-	addUser("123","1234");
-	saveToServer(".56693","789","1234");
+var Player = Parse.Object.extend("Player", {
+	//to prevent front end typo. Wrap up all gets and sets
+	getId: function() {
+		return this.get("id");
+	},
+	getLat: function() {
+		return this.get("latitude");
+	},
+	getLon: function() {
+		return this.get("longitude");
+	},
+	isSeeker: function() {
+		return (this.get("userclass") === "seeker");
+	},
+	getCreatedAt: function() {
+		return this.get("createdAt");
+	},
+	setLat: function(lat) {
+		if (typeof(lat) === "number") {
+			this.set("latitude", lat);
+		}
+	},
+	setLon: function(lon) {
+		if (typeof(lon) === "number") {
+			this.set("longitude", lon);
+		}
+	},
+	setIsSeeker: function(isSeeker) {
+		if (typeof(isSeeker) === "boolean") {
+			if (isSeeker) {
+				this.set("userclass", "seeker");
+			} else {
+				this.set("userclass", "hider");
+			}
+		}
+	}
+ }, 
+ {
+	createNewPlayer: function(lat,long) {
+	//buggy needs callbacks
+		var query = new Parse.Query(Game);
+		var idUnique = true;
+		query.equalTo("gameId", gameId);
+		query.find({
+			success:function(results) {
+				if (results.length == 0)
+					this.createTheGame(gameId);
+				else
+					gameIdAlreadyExists();
+			},
+			error:function(){
+				alert("create new game fails");
+			}
+		});
+	}
+});
+
+
+
+
+var player;
+var users;
+
+function test() {
+
+	addUser(123,1234);
+	/*saveToServer(".56693","789","1234");
 	var temp=SeekerView();
 	//alert(temp [0].user);
 	console.log(temp);
-
+	*/
 	//var la=temp[1].user;
 	//alert(la);
 }
+
+function updateLocation() {
+	var lat = player.get("latitude");
+	var lon = player.get("longitude");
+	player.set("latitude", lat+1);
+	player.set("longitude", lon+1);
+	player.save(null, {
+		success: function() {
+			console.log("Update success");
+		},
+		error: function() {
+			console.log("Update failed");
+		}
+	});
+}
+
+/*
 function saveToServer(userID,lat,long){
 
 		var Player = Parse.Object.extend("Player");
@@ -50,36 +133,33 @@ function saveToServer(userID,lat,long){
 				  }
 				});	
 			}
-function HiderView(){
-	var Player = Parse.Object.extend("Player");
+
+*/
+
+function getHiders() {
 	var query=new Parse.Query(Player);
 	query.equalTo("userclass","hider");
 	query.find({
-		success:function(results){
-			var View=new Array();
-			for (var i=0;i<results.length;i++)
-			{
-				var object=results[i];
-				var temp =
-				{
-   				 user: object.get("userID"),
-    		     lat: object.get("latitude"),
-    		     longi: object.get("longitude"),
-				}
-				View.push(temp);
-			}
-			return View;
+		success:function(results) {
+			handleGetHiders(results);
 		},
-		 error: function(error) 
-		 {
-				//   alert("Error: " + error.code + " " + error.message);
-		 }
+		error: function(error) {
+			alert("Error: " + error.code + " " + error.message);
+		}
 	});
 }
 
+function handleGetHiders(results) {
+	users = new Array();
+	for (var i=0;i<results.length;i++) {
+		users.push(results[i]);
+	}
+}
+
+
+
 function SeekerView()
 {
-	var Player = Parse.Object.extend("Player");
 	var query=new Parse.Query(Player);
 	query.find({
 		success:function(results){
@@ -119,7 +199,6 @@ function callback(View)
 
 function isThereASeeker()
 {
-	var Player = Parse.Object.extend("Player");
 	var query=new Parse.Query(Player);
 	query.equalTo("userclass","seeker");
 	query.find({
@@ -141,54 +220,59 @@ function isThereASeeker()
 	});
 }
 
-function addUser(lat,long)
-{	/* */
-		var Player = Parse.Object.extend("Player");
+function addUser(lat,lon) {
 		var query=new Parse.Query(Player);
 		query.equalTo("userclass","seeker");
 		query.find({
 		success:function(results){
-			if(results.length!=0)
-			{
-			var player=Parse.Object.extend("Player");
-			var temp=new player();
-			var Id=String(Math.random()).substring(1,7);
-			temp.set("userID",Id);
-			temp.set("userclass","hider");
-			temp.set("latitude",lat);
-			temp.set("longitude",longitude);
-			temp.save();
-			alert("hider");
+			if(results.length!=0) {
+				var temp=new Player();
+				temp.set("userclass","hider");
+				temp.set("latitude",lat);
+				temp.set("longitude",lon);
+				temp.save(null, {
+					success: function(player) {
+						handleNewUser(player);
+					},
+					error: function(player, error) {
+						console.log(error);
+					}
 
-			return {
-				"userID":Id,
-				"userclass":"hider"
-				}
-			}
-			else 
-			{
-			var player=Parse.Object.extend("Player");
-			var temp=new player();
-			var Id=String(Math.random()).substring(1,7);
-			temp.set("userID",Id);
-			temp.set("userclass","seeker");
-			temp.set("latitude",lat);
-			temp.set("longitude",long);
-			temp.save();
-			alert("seeker");
+				});
+				//alert("hider");
+			} else {
+				var temp=new Player();
+				temp.set("userclass","seeker");
+				temp.set("latitude",lat);
+				temp.set("longitude",lon);
+				temp.save(null, {
+					success: function(player) {
+						handleNewUser(player);
+					},
+					error: function(player, error) {
+						console.log(error);
+					}
+
+				});
+				//alert("seeker");
 			}
 		},
 		 error: function(error) 
 		 {
+		 	handleNewUser("Error");
 		 }
 	});	
 		
 	
 }
 
-function deleteUser(userID)
-{
-	var Player= Parse.Object.extend("Player");
+
+function handleNewUser(user) {
+	console.log(user);
+	player = user;
+}
+
+function deleteUser(userID) {
 	var query = new Parse.Query(Player);
 	query.get(userID, {
     success: function(myObj) {
@@ -202,9 +286,7 @@ function deleteUser(userID)
 });
 }
 
-function render()
-{
-		var Player= Parse.Object.extend("Player");
+function areThereSeekers() {
 		var query = new Parse.Query(Player);
 		query.count({
   		error: function(error)
