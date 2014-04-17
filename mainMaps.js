@@ -49,7 +49,6 @@ var locationUpdateTimer;
 				});
 
 				hider.isTagged = true;
-                window.clearInterval(hider.ID);
                 if (allHidersTagged(hiders)) {
                 	gameTimer.stop();
                 	locationUpdateTimer.stop();
@@ -179,6 +178,12 @@ var locationUpdateTimer;
 	}
 
 	function moveHider(hider,map,action){
+
+		// we only move untagged hiders
+		if (hider.isTagged) {
+			return;
+		}
+
 		var marker = hider.marker;
 		var markerLocation = marker.position;
 
@@ -206,8 +211,8 @@ var locationUpdateTimer;
 		}
 			
 
-			var newlocation = new google.maps.LatLng(lk,lA);
-			marker.setPosition(newlocation);
+		var newlocation = new google.maps.LatLng(lk,lA);
+		marker.setPosition(newlocation);
 
 	}
 
