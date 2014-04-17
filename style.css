@@ -111,6 +111,17 @@ div {
 	box-shadow: #ECECEA 3px 3px 3px;
 }
 
+#updateTimer {
+	color: #74AFAD;
+	margin: auto;
+	width: 40%;
+	position: absolute;
+	top: 5px;
+	left: 30%;
+	font-size: 2em;
+	text-align: center;
+}
+
 .btn {
 
   font-family: Georgia;

@@ -8,6 +8,7 @@ var curLocation;
 var hiders =  new Array();
 var seekers = new Array();
 var map;
+var locationUpdateTimer;
 
 
     $( document ).ready(function() {
@@ -49,8 +50,9 @@ var map;
 
 				hider.isTagged = true;
                 window.clearInterval(hider.ID);
-                if (allPlayersTagged()) {
+                if (allHidersTagged(hiders)) {
                 	gameTimer.stop();
+                	locationUpdateTimer.stop();
                 }
 				
 			}
@@ -64,13 +66,6 @@ var map;
 		});
 	}
 
-	function allPlayersTagged() {
-		var result = true;
-		for (var i=0; i < hiders.length; i++) {
-			result = result && hiders[i].isTagged;
-		}
-		return result;
-	}
 
 	function Seeker(currentLocation,marker){
 		//this.playerName = playerName;
@@ -85,6 +80,22 @@ var map;
 	}
 
 	function initialize() {
+
+		// set up timer loop
+		locationUpdateTimer = new Timer(30);
+		locationUpdateTimer.setSpeed(10); // 10 times faster than real life
+		locationUpdateTimer.onTimeOut(function() {
+			moveHiders();
+			// reset and restart the loop
+			this.reset();
+			this.start();
+		});
+		locationUpdateTimer.onStart(function(curTime) {
+			document.getElementById("updateTimer").innerHTML = locationUpdateTimer.toString(curTime);
+		});
+		locationUpdateTimer.onTick(function(curTime) {
+			document.getElementById("updateTimer").innerHTML = locationUpdateTimer.toString(curTime);
+		});
 			
 
 		var pos = getUserLocation();	
@@ -132,13 +143,10 @@ var map;
 			hiders.push(hider2);
 			hiders.push(hider3);
 			hiders.push(hider4);
-			hider1.ID = window.setInterval(function(){moveHider(hider1,map,"down");},1000);
-			hider2.ID = window.setInterval(function(){moveHider(hider2,map,"up");},1000);
-			hider3.ID = window.setInterval(function(){moveHider(hider3,map,"left");},1000);
-			hider4.ID = window.setInterval(function(){moveHider(hider4,map,"right");},1000);
+
+			locationUpdateTimer.start();
 	}
-	// Use the DOM setInterval() function to change the offset of the symbol
-	// at fixed intervals.
+
 
 	function addHider(location,map){
 		var image = {
@@ -160,6 +168,14 @@ var map;
 
 		return marker;
 							
+	}
+
+	function moveHiders() {
+		// TODO remove hardcoding!!!
+		moveHider(hiders[0],map,"down");
+		moveHider(hiders[1],map,"up");
+		moveHider(hiders[2],map,"left");
+		moveHider(hiders[3],map,"right");
 	}
 
 	function moveHider(hider,map,action){
@@ -335,26 +351,28 @@ var map;
 	    }
   }
 
-	function lineDistance( point1, point2 )
-		{
-		  var xs = 0;
-		  var ys = 0;
-		 
-		  xs = point2.x - point1.x;
-		  xs = xs * xs;
-		 
-		  ys = point2.y - point1.y;
-		  ys = ys * ys;
-		 
-		  return Math.sqrt( xs + ys );
-		}
-	function checktag(hiders){
+function lineDistance( point1, point2 ) {
+	var xs = 0;
+  	var ys = 0;
+ 
+  	xs = point2.x - point1.x;
+  	xs = xs * xs;
+ 
+  	ys = point2.y - point1.y;
+  	ys = ys * ys;
+ 
+  	return Math.sqrt( xs + ys );
+}
 
-		var len = hiders.length;
-		for (var j = 0 ;j<len;j++){
-			if (hiders[j].isTagged == false)
-				return false;
+function allHidersTagged(hiders){
+
+	var len = hiders.length;
+	for (var j = 0 ;j<len;j++){
+		if (hiders[j].isTagged == false) {
+			return false;
 		}
-		return true;
 	}
+	return true;
+}
+
 	

@@ -107,7 +107,7 @@ function cancelForm(oForm) {
 
 
 function stop() {
-    if (!checktag(hiders)){
+    if (!allHidersTagged(hiders)){
 		alertify.alert('Time up! You lose!');
         //alert("Time up! You lose!");
     }
@@ -115,6 +115,7 @@ function stop() {
 		alertify.alert('Congrats! You win!');
         //alert("Congrats! You win!");
     }
+    locationUpdateTimer.stop(); // from mainMaps.js TODO remove all this cross referencing madness!
 }
 
 

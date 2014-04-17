@@ -51,7 +51,7 @@ var Timer = function(time) {
 			time = optTime*1000;
 		}
 
-		ttl = time;
+		ttl = time/1000;
 	}
 
 	this.setSpeed = function(ratio) {
