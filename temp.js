@@ -1,4 +1,3 @@
-
 // Jingcheng
 //Parse.initialize("UH0vJUKo17FcCgOJPX6KFAmK0DxnQwCKtV4yQwva", "HwdLU8EQA6IIXP10n9ovZgnAJAwk1P5qzwlK5Clu");
 
@@ -68,6 +67,7 @@ var Player = Parse.Object.extend("Player", {
 
 var player;
 var users;
+var View;
 
 function test() {
 
@@ -96,7 +96,7 @@ function updateLocation() {
 	});
 }
 
-/*
+
 function saveToServer(userID,lat,long){
 
 		var Player = Parse.Object.extend("Player");
@@ -134,38 +134,41 @@ function saveToServer(userID,lat,long){
 				});	
 			}
 
-*/
 
-function getHiders() {
+
+function HiderView(){
+	var Player = Parse.Object.extend("Player");
 	var query=new Parse.Query(Player);
 	query.equalTo("userclass","hider");
 	query.find({
-		success:function(results) {
-			handleGetHiders(results);
+		success:function(results){
+			handleviewer(results);
 		},
-		error: function(error) {
-			alert("Error: " + error.code + " " + error.message);
-		}
+		 error: function(error) 
+		 {
+				//   alert("Error: " + error.code + " " + error.message);
+		 }
 	});
 }
-
-function handleGetHiders(results) {
-	users = new Array();
-	for (var i=0;i<results.length;i++) {
-		users.push(results[i]);
-	}
-}
-
-
-
 function SeekerView()
 {
+	var Player = Parse.Object.extend("Player");
 	var query=new Parse.Query(Player);
 	query.find({
 		success:function(results){
-			var View=new Array();
-			alert(results.length);
-			for (var i=0;i<results.length;i++)
+			handleviewer(results);
+		},
+		 error: function(error)
+		 {
+				//   alert("Error: " + error.code + " " + error.message);
+		 }
+		});
+}
+function handleviewer(results)
+{
+	
+	View=new Array();
+		for (var i=0;i<results.length;i++)
 			{
 				var object=results[i];
 				var temp =
@@ -174,29 +177,13 @@ function SeekerView()
     		     lat: object.get("latitude"),
     		     longi: object.get("longitude"),
 				}
-				//alert(object.get("longitude"));
 				View.push(temp);
-			}	
-		 	callback(View);
-			//console.log(View);
-			//return View;
-		},
-		 error: function(error)
-		 {
-				//   alert("Error: " + error.code + " " + error.message);
-		 }
-		});
-}
-
-function callback(View)
-{
-	//seekerLocationData=View;
+		//	View.push(results[i]);
+			}
 	console.log(View);
-	return View;
 	//alert(seekerLocationData[0].user);
 
 }
-
 function isThereASeeker()
 {
 	var query=new Parse.Query(Player);
