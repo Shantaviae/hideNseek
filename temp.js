@@ -207,56 +207,66 @@ function isThereASeeker()
 	});
 }
 
-function addUser(lat,lon) {
+function addUser(lat,long)
+{	/* */
+		var Player = Parse.Object.extend("Player");
 		var query=new Parse.Query(Player);
 		query.equalTo("userclass","seeker");
 		query.find({
 		success:function(results){
-			if(results.length!=0) {
-				var temp=new Player();
-				temp.set("userclass","hider");
-				temp.set("latitude",lat);
-				temp.set("longitude",lon);
-				temp.save(null, {
-					success: function(player) {
-						handleNewUser(player);
+			if(results.length!=0)
+			{
+			var player=Parse.Object.extend("Player");
+			var temp=new player();
+			var Id=String(Math.random()).substring(1,7);
+			temp.set("userID",Id);
+			temp.set("userclass","hider");
+			temp.set("latitude",lat);
+			temp.set("longitude",long);
+			temp.save(null, {
+					success: function(temp) {
+						handleNewUser(temp);
 					},
-					error: function(player, error) {
+					error: function(temp, error) {
 						console.log(error);
 					}
 
 				});
-				//alert("hider");
-			} else {
-				var temp=new Player();
-				temp.set("userclass","seeker");
-				temp.set("latitude",lat);
-				temp.set("longitude",lon);
-				temp.save(null, {
-					success: function(player) {
-						handleNewUser(player);
+
+			alert("hider");
+			}
+			else 
+			{
+			var player=Parse.Object.extend("Player");
+			var temp=new player();
+			var Id=String(Math.random()).substring(1,7);
+			temp.set("userID",Id);
+			temp.set("userclass","seeker");
+			temp.set("latitude",lat);
+			temp.set("longitude",long);
+			temp.save(null, {
+					success: function(temp) {
+						handleNewUser(temp);
 					},
-					error: function(player, error) {
+					error: function(temp, error) {
 						console.log(error);
 					}
 
 				});
-				//alert("seeker");
+			alert("seeker");
 			}
 		},
 		 error: function(error) 
 		 {
-		 	handleNewUser("Error");
 		 }
 	});	
 		
 	
 }
+function handleNewUser(temp)
+{
 
-
-function handleNewUser(user) {
-	console.log(user);
-	player = user;
+	player=temp.get("userID");
 }
 
 function deleteUser(userID) {
