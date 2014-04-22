@@ -90,48 +90,48 @@ var locationUpdateTimer;
 		});
 
 		// add event listener
-		google.maps.event.addListener(marker, 'click', function() {
-			var infowindow;
-			if (!user.isSeeker()) {
-				infowindow = new google.maps.InfoWindow({
-					content :"This is a hider!"
-				});
-			} else {
-				infowindow = new google.maps.InfoWindow({
-					content :"This is a seeker!"
-				});
-			}
+		if (user !== player) {
+			google.maps.event.addListener(marker, 'click', function() {
+				var infowindow;
+				if ((!user.isSeeker()) && (player.isSeeker())) {
+					
+					var currentHider = marker.position;
 
-			/* TODO
-			var currentSeeker = seekers[0].currentLocation;
-			var currentHider = marker.position;
+					var p2 = new point(currentHider.A,currentHider.k);
+				  	var p1 = new point(player.A,player.k);
+					var distance = lineDistance(p1,p2)*100000;
+					console.log("the distance is " + distance);
+					if ( distance <= 15){
+						var infowindow = new google.maps.InfoWindow({
+							content :"Got You!"
+						});
 
-			var p2 = new point(currentHider.A,currentHider.k);
-		  	var p1 = new point(currentSeeker.A,currentSeeker.k);
-			var distance = lineDistance(p1,p2)*100000;
-			console.log("the distance is " + distance);
-			if ( distance <= 15){
-				var infowindow = new google.maps.InfoWindow({
-					content :"Got You!"
-				});
+						hider.isTagged = true;
+		                if (allHidersTagged(users)) {
+		                	gameTimer.stop();
+		                	locationUpdateTimer.stop();
+		                }
+						
+					}
+					else {
+						infowindow = new google.maps.InfoWindow({
+							content :"You are too far!"
+						});
+					}
+				} else if (user.isSeeker()) {
+					infowindow = new google.maps.InfoWindow({
+						content :"Can't tag a seeker!"
+					});
+				} else {
+					infowindow = new google.maps.InfoWindow({
+						content :"Can't tag when you are a hider!"
+					});
+				}
 
-				hider.isTagged = true;
-                if (allHidersTagged(hiders)) {
-                	gameTimer.stop();
-                	locationUpdateTimer.stop();
-                }
-				
-			}
-			else {
-				var infowindow = new google.maps.InfoWindow({
-					content :"You are too far!"
-				});
-			}	
-			*/
 
-			infowindow.open(map,marker);
-		});
-
+				infowindow.open(map,marker);
+			});
+		}
 
 		user.marker = marker;
 		user.marker.setPosition(location);
