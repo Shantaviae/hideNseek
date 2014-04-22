@@ -302,18 +302,30 @@ function handleNewUser(temp)
 	//console.log(playerClass);
 }
 
-function deleteUser(userID) {
-	var query = new Parse.Query(Player);
-	query.get(userID, {
-    success: function(myObj) {
+function deleteUser(parseObj) {
+	//var query = new Parse.Query(Player);
+	//query.get(userID, {
+    //success: function(myObj) {
     // The object was retrieved successfully.
-  	  myObj.destroy({});
-	  },
-  	error: function(object, error) {
+  	//  myObj.destroy({});
+	//  },
+  //	error: function(object, error) {
     // The object was not retrieved successfully.
     // error is a Parse.Error with an error code and description.
-  }
-});
+  //}
+//});
+	parseObj.destroy({
+		success:function()
+		{
+			console.log("Destroy Successfully");
+
+		},
+		error: function()
+		{
+			console.log("Can not destroy");
+		}
+	});
+
 }
 
 function areThereSeekers() {
