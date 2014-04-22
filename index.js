@@ -38,7 +38,7 @@ $( document ).ready(function() {
 
 	// Initialize map
 	myMap = initialize();
-
+	
 	// Initialize timers
 	gameTimer = new Timer(600); 	// ten minutes of gametime
 	gameTimer.setSpeed(10);		// ten times faster than real life
@@ -77,7 +77,7 @@ function startGame(){
 	//myMap = initialize();	
 
 	google.maps.event.trigger(myMap, 'resize');
-	makeHiders(seekers[0].currentLocation);
+	//makeHiders();
 
 		
 }

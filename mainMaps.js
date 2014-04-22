@@ -9,6 +9,7 @@ var hiders =  new Array();
 var seekers = new Array();
 var map;
 var locationUpdateTimer;
+var currentUser = new Object();
 
 
     $( document ).ready(function() {
@@ -89,6 +90,7 @@ var locationUpdateTimer;
 			this.reset();
 			this.start();
 		});
+
 		locationUpdateTimer.onStart(function(curTime) {
 			document.getElementById("updateTimer").innerHTML = locationUpdateTimer.toString(curTime);
 		});
@@ -110,7 +112,9 @@ var locationUpdateTimer;
 			mapOptions);
 
 
-		initializeLocation(map);			
+		//initializeLocation(map);
+
+
 			//console.log(hiders[0].currentLocation);	  	
 		// center map on user on resize
 		google.maps.event.addDomListener(map, 'resize', function(event) {
@@ -216,21 +220,60 @@ var locationUpdateTimer;
 
 	}
 
-	function addSeeker(location,map){
-		var image = "marker_seeker.png"
 
+function updateMarker(user){
+	var location = new google.maps.LatLng(user.getLat(),user.getLon());
+	user.marker.setPosition(location);
+}
+
+	function makeMarker(user,map){
+
+		var image;
+
+
+		if (user.isSeeker())
+			 image = "marker_seeker.png";
+		else image = "marker_hider.png";
+
+
+		var location = new google.maps.LatLng(user.getLat(),user.getLon());
 		var marker = new google.maps.Marker({
 			map:map,
 			position:location,
 			icon: image
 
 		});
-		if (seekers[0].marker!=null)
-			seekers[0].marker.setMap(null);
-		seekers[0].marker = marker;
-		seekers[0].currentLocation = location;						
+		user.marker = marker;
+		user.marker.setPosition(location);
+
+		// if (seekers[0].marker!=null)
+		// 	seekers[0].marker.setMap(null);
+		// seekers[0].marker = marker;
+		// seekers[0].currentLocation = location;						
 	}
 
+/*
+	var func1 = function(pos,callback){
+
+
+		addUser(pos.k,pos.A);
+		(callback && typeof(callback) === "function") && callback();
+
+	}
+*/
+	var func2 = function(){
+		// currentUser.userclass = player.getuserclass;
+		// currentUser.userID = playerID;
+		// currentUser.latitude = pos.k;
+		// currentUser.longitude = pos.A;
+
+		//console.log(playerClass);
+		//console.log(playerID);
+		//console.log(currentUser.userclass);
+		//console.log(currentUser.userID);
+		//console.log(player);
+		makeMarker(player,map);
+	}
 
 	function initializeLocation(map){
 		if (navigator.geolocation){
@@ -238,9 +281,9 @@ var locationUpdateTimer;
 			navigator.geolocation.getCurrentPosition(function(position){
 				var pos  = new google.maps.LatLng(position.coords.latitude,
 					position.coords.longitude)
-					map.setCenter(pos);	
-					addSeeker(pos,map);
-					
+					map.setCenter(pos);						
+					//func1(pos,func2(pos));
+					addUser(pos.k, pos.A);
 			},function(){
 				handleNoGeolocation(true);
 			});
@@ -317,9 +360,16 @@ var locationUpdateTimer;
 		map.setCenter(pos);
 		//console.log(pos);
 		//var image = "marker_seeker.png"
-		addSeeker(pos,map);
-			
+		//addSeeker(pos,map);
+		player.setLat(pos.k);
+		player.setLon(pos.A);
+		saveToServer(player);
+		updateMarker(player);	
 	}
+
+
+
+
 
 	function handleNoGeolocation(errorFlag) {
 		if (errorFlag) {

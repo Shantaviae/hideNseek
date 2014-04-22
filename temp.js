@@ -2,8 +2,10 @@
 //Parse.initialize("UH0vJUKo17FcCgOJPX6KFAmK0DxnQwCKtV4yQwva", "HwdLU8EQA6IIXP10n9ovZgnAJAwk1P5qzwlK5Clu");
 
 // Francis
-Parse.initialize("nRtaCbEgJ6jjaVWdXQncS9Ac8Wf7UtNrRlV2mtOH", "oFiopQ3Gw1kVF6qCgeY0uKdMbo9g0AVaJ3oqymVp");
+//Parse.initialize("nRtaCbEgJ6jjaVWdXQncS9Ac8Wf7UtNrRlV2mtOH", "oFiopQ3Gw1kVF6qCgeY0uKdMbo9g0AVaJ3oqymVp");
 
+
+Parse.initialize("JBOonUKeC2EOV3Z4xoqkUDUfMMPqz00BZgm2dKX2", "qTL4hD4PR8kZqp1ux8KXbwpdgNaxAddDUMY9W81G");
 
 var Player = Parse.Object.extend("Player", {
 	//to prevent front end typo. Wrap up all gets and sets
@@ -65,6 +67,7 @@ var Player = Parse.Object.extend("Player", {
 
 
 
+var playerID;
 var player;
 var users;
 var View;
@@ -97,10 +100,22 @@ function updateLocation() {
 }
 
 
-function saveToServer(userID,lat,long){
+function saveToServer(parseObj){
 
-		var Player = Parse.Object.extend("Player");
-		var query = new Parse.Query(Player);
+	parseObj.save(null, {
+		success: function(object) {
+		    // Now let's update it with some new data. In this case, only cheatMode and score
+		    // will get sent to the cloud. playerName hasn't changed.
+		    //alert("location updated to Server")
+		    console.log("Save successful");
+		},
+	  	error: function(error) {
+	  		alert("Error: " + error.code + " " + error.message);
+	  	}
+	});
+	/*
+		//var Player = Parse.Object.extend("Player");
+		var query = new Parse.Query(player);
 		query.equalTo("userID",userID);
 		query.find({
 		  success: function(results) {
@@ -132,7 +147,8 @@ function saveToServer(userID,lat,long){
 				  alert("Error: " + error.code + " " + error.message);
 				  }
 				});	
-			}
+*/	
+}
 
 
 
@@ -263,10 +279,19 @@ function addUser(lat,long)
 		
 	
 }
+
+var playerClass;
+
 function handleNewUser(temp)
 {
 
-	player=temp.get("userID");
+	player = temp;
+	
+	//playerID=temp.get("userID");
+	//console.log(playerID);
+	//playerClass = temp.get("userclass");
+	func2();
+	//console.log(playerClass);
 }
 
 function deleteUser(userID) {
