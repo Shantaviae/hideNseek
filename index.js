@@ -7,8 +7,6 @@ var gRadius;
 var status;
 var handler;
 
-var myMap;
-
 var currentView = "#home";	// which page is currently being shown
 
 
@@ -37,7 +35,7 @@ function setHeaderPageContentHeights() {
 $( document ).ready(function() {
 
 	// Initialize map
-	myMap = initialize();
+	initialize();
 	
 	// Initialize timers
 	gameTimer = new Timer(600); 	// ten minutes of gametime
@@ -74,11 +72,9 @@ function goToWaitPage() {
 function startGame(){	
 	showPage("#mapPage");
 	gameTimer.start();
-	//myMap = initialize();	
+	locationUpdateTimer.start();
 
-	google.maps.event.trigger(myMap, 'resize');
-	//makeHiders();
-
+	google.maps.event.trigger(map, 'resize');
 		
 }
 
@@ -98,7 +94,7 @@ function cancelForm(oForm) {
 
 
 function stop() {
-    if (!allHidersTagged(hiders)){
+    if (!allHidersTagged(users)){
 		alertify.alert('Time up! You lose!');
         //alert("Time up! You lose!");
     }

@@ -7,10 +7,16 @@
 
 Parse.initialize("JBOonUKeC2EOV3Z4xoqkUDUfMMPqz00BZgm2dKX2", "qTL4hD4PR8kZqp1ux8KXbwpdgNaxAddDUMY9W81G");
 
+var playerClass;
+var playerID;
+var player;
+var users = new Array();
+
+
 var Player = Parse.Object.extend("Player", {
 	//to prevent front end typo. Wrap up all gets and sets
 	getId: function() {
-		return this.get("id");
+		return this.id;
 	},
 	getLat: function() {
 		return this.get("latitude");
@@ -66,150 +72,60 @@ var Player = Parse.Object.extend("Player", {
 
 
 
-
-var playerID;
-var player;
-var users;
-var View;
-
-function test() {
-
-	addUser(123,1234);
-	/*saveToServer(".56693","789","1234");
-	var temp=SeekerView();
-	//alert(temp [0].user);
-	console.log(temp);
-	*/
-	//var la=temp[1].user;
-	//alert(la);
-}
-
-function updateLocation() {
-	var lat = player.get("latitude");
-	var lon = player.get("longitude");
-	player.set("latitude", lat+1);
-	player.set("longitude", lon+1);
-	player.save(null, {
-		success: function() {
-			console.log("Update success");
-		},
-		error: function() {
-			console.log("Update failed");
-		}
-	});
-}
-
-
+// simple wrapper on the parse save method.
 function saveToServer(parseObj){
 
 	parseObj.save(null, {
 		success: function(object) {
-		    // Now let's update it with some new data. In this case, only cheatMode and score
-		    // will get sent to the cloud. playerName hasn't changed.
-		    //alert("location updated to Server")
-		    object.set("latitude", lat);
-	            object.set("longitude", long);
-		    object.save();
 		    console.log("Save successful");
 		},
 	  	error: function(error) {
 	  		alert("Error: " + error.code + " " + error.message);
 	  	}
-	});
-	/*
-		//var Player = Parse.Object.extend("Player");
-		var query = new Parse.Query(player);
-		query.equalTo("userID",userID);
-		query.find({
-		  success: function(results) {
-		    //alert("Successfully retrieved " + results.length + "");
-		    // Do something with the returned Parse.Object values
-
-		    	if (results.length>0)
-		    	{   
-		      	var object=results[0];
-		      	//alert(object.get("latitude"));
-		      	object.save(null, {
-					  success: function(object) {
-					    // Now let's update it with some new data. In this case, only cheatMode and score
-					    // will get sent to the cloud. playerName hasn't changed.
-					    object.set("latitude", lat);
-						object.set("longitude", long);
-					    object.save();
-					    //alert("location updated to Server")
-					  }
-					});
-		         }
-		         else 
-		         {
-		          alert ("No results");
-		         }
-		       
-				},
-				  error: function(error) {
-				  alert("Error: " + error.code + " " + error.message);
-				  }
-				});	
-*/	
+	});	
 }
 
 
 
 
-function HiderView(parseObj){
-	var Player = Parse.Object.extend("Player");
-	var query=new Parse.Query(Player);
-	query.equalTo("userclass","hider");
-	query.notEqualTo("userID",parseObj.getId());
+function hiderView() {
+	var query = new Parse.Query(Player);
+	query.equalTo("userclass", "hider");
+	console.log(player.getId());
+	query.notEqualTo("objectId", player.getId());
 	query.find({
 		success:function(results){
-			handleviewer(results);
+			handleViewer(results);
 		},
-		 error: function(error) 
-		 {
-				//   alert("Error: " + error.code + " " + error.message);
-		 }
+		error: function(error) {
+			console.log("Error: " + error.code + " " + error.message);
+		}
 	});
 }
-function SeekerView(parseObj)
-{
-	var Player = Parse.Object.extend("Player");
-	var query=new Parse.Query(Player);
-	console.log(parseObj.getId());
-	query.notEqualTo("userID",parseObj.getId());
+
+function seekerView() {
+	var query = new Parse.Query(Player);
+	query.notEqualTo("objectId", player.getId());
 	query.find({
-		success:function(results){
-			handleviewer(results);
+		success:function(results) {
+			handleViewer(results);
 		},
-		 error: function(error)
-		 {
-				//   alert("Error: " + error.code + " " + error.message);
-		 }
-		});
+		error: function(error) {
+			console.log("Error: " + error.code + " " + error.message);
+		}
+	});
 }
 
-function handleviewer(results)
-{
-	
-	View=new Array();
-		for (var i=0;i<results.length;i++)
-			{
-				var object=results[i];
-				var temp =
-				{
-   				 user: object.get("userID"),
-    		     lat: object.get("latitude"),
-    		     longi: object.get("longitude"),
-				}
-				View.push(temp);
-		//	View.push(results[i]);
-			}
-	console.log(View);
-	//alert(seekerLocationData[0].user);
+function handleViewer(results) {
+	console.log("users: " + results.length);
+	clearOtherPlayerMarkers();
+	for (var i = 0; i < results.length; i++) {
+		makeMarker(results[i]);
+	}
 
 }
-function isThereASeeker()
-{
+
+function isThereASeeker() {
 	var query=new Parse.Query(Player);
 	query.equalTo("userclass","seeker");
 	query.find({
@@ -233,51 +149,45 @@ function isThereASeeker()
 
 function addUser(lat,long)
 {	/* */
-		var Player = Parse.Object.extend("Player");
 		var query=new Parse.Query(Player);
 		query.equalTo("userclass","seeker");
 		query.find({
 		success:function(results){
-			if(results.length!=0)
-			{
-			var player=Parse.Object.extend("Player");
-			var temp=new player();
-			var Id=String(Math.random()).substring(1,7);
-			temp.set("userID",Id);
-			temp.set("userclass","hider");
-			temp.set("latitude",lat);
-			temp.set("longitude",long);
-			temp.save(null, {
-					success: function(temp) {
-						handleNewUser(temp);
-					},
-					error: function(temp, error) {
-						console.log(error);
-					}
+			if(results.length!=0) {
+				var temp = new Player();
+				//var Id=String(Math.random()).substring(1,7);
+				//temp.set("userID",Id);
+				temp.set("userclass","hider");
+				temp.set("latitude",lat);
+				temp.set("longitude",long);
+				temp.save(null, {
+						success: function(temp) {
+							handleNewUser(temp);
+						},
+						error: function(temp, error) {
+							console.log(error);
+						}
 
-				});
+					});
 
-			alert("hider");
-			}
-			else 
-			{
-			var player=Parse.Object.extend("Player");
-			var temp=new player();
-			var Id=String(Math.random()).substring(1,7);
-			temp.set("userID",Id);
-			temp.set("userclass","seeker");
-			temp.set("latitude",lat);
-			temp.set("longitude",long);
-			temp.save(null, {
-					success: function(temp) {
-						handleNewUser(temp);
-					},
-					error: function(temp, error) {
-						console.log(error);
-					}
+				console.log("hider");
+			} else {
+				var temp = new Player();
+				//var Id=String(Math.random()).substring(1,7);
+				//temp.set("userID",Id);
+				temp.set("userclass","seeker");
+				temp.set("latitude",lat);
+				temp.set("longitude",long);
+				temp.save(null, {
+						success: function(temp) {
+							handleNewUser(temp);
+						},
+						error: function(temp, error) {
+							console.log(error);
+						}
 
-				});
-			alert("seeker");
+					});
+				console.log("seeker");
 			}
 		},
 		 error: function(error) 
@@ -288,18 +198,11 @@ function addUser(lat,long)
 	
 }
 
-var playerClass;
 
-function handleNewUser(temp)
-{
 
+function handleNewUser(temp) {
 	player = temp;
-	
-	//playerID=temp.get("userID");
-	//console.log(playerID);
-	//playerClass = temp.get("userclass");
-	func2();
-	//console.log(playerClass);
+	makeMarker(player,map);
 }
 
 function deleteUser(parseObj) {
@@ -354,5 +257,27 @@ function areThereSeekers() {
     });
   }
 });
+}
+
+
+/* for test code */
+function test() {
+	addUser(123,1234);
+}
+
+/* for test code */
+function updateLocation() {
+	var lat = player.get("latitude");
+	var lon = player.get("longitude");
+	player.set("latitude", lat+1);
+	player.set("longitude", lon+1);
+	player.save(null, {
+		success: function() {
+			console.log("Update success");
+		},
+		error: function() {
+			console.log("Update failed");
+		}
+	});
 }
 
