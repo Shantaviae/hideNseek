@@ -152,10 +152,12 @@ function saveToServer(parseObj){
 
 
 
-function HiderView(){
+
+function HiderView(parseObj){
 	var Player = Parse.Object.extend("Player");
 	var query=new Parse.Query(Player);
 	query.equalTo("userclass","hider");
+	query.notEqualTo("userID",parseObj.getId());
 	query.find({
 		success:function(results){
 			handleviewer(results);
@@ -166,10 +168,12 @@ function HiderView(){
 		 }
 	});
 }
-function SeekerView()
+function SeekerView(parseObj)
 {
 	var Player = Parse.Object.extend("Player");
 	var query=new Parse.Query(Player);
+	console.log(parseObj.getId());
+	query.notEqualTo("userID",parseObj.getId());
 	query.find({
 		success:function(results){
 			handleviewer(results);
@@ -180,6 +184,7 @@ function SeekerView()
 		 }
 		});
 }
+
 function handleviewer(results)
 {
 	
