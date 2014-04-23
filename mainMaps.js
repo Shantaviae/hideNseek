@@ -74,12 +74,24 @@ var locationUpdateTimer;
 
 
 	function makeMarker(user) {
-		var image;
+		var url;
 
-		if (user.isSeeker())
-			 image = "marker_seeker.png";
-		else image = "marker_hider.png";
+		if (user === player) {
+			url = "images/user_";
+		} else {
+			url = "images/marker_";
+		}
 
+		if (user.isSeeker()) {
+			url = url + "seeker.png";
+		} else {
+			url = url + "hider.png";
+		} 
+
+		var image = {
+			url: url,
+			scaledSize: new google.maps.Size(30,30)
+		};
 
 		var location = new google.maps.LatLng(user.getLat(),user.getLon());
 		var marker = new google.maps.Marker({
@@ -97,8 +109,10 @@ var locationUpdateTimer;
 					
 					var currentHider = marker.position;
 
-					var p2 = new point(currentHider.A,currentHider.k);
-				  	var p1 = new point(player.A,player.k);
+					var p2 = new point(currentHider.k,currentHider.A);
+				  	var p1 = new point(player.getLat(),player.getLon());
+				  	console.log(p1);
+				  	console.log(p2);
 					var distance = lineDistance(p1,p2)*100000;
 					console.log("the distance is " + distance);
 					if ( distance <= 15){
@@ -106,7 +120,7 @@ var locationUpdateTimer;
 							content :"Got You!"
 						});
 
-						hider.isTagged = true;
+						user.setIsSeeker(true);
 		                if (allHidersTagged(users)) {
 		                	gameTimer.stop();
 		                	locationUpdateTimer.stop();
@@ -142,7 +156,7 @@ var locationUpdateTimer;
 
 	function clearOtherPlayerMarkers() {
 		for (var i = 0; i < users.length; i++) {
-			user.marker.setMap(null); // removes marker from map
+			users[i].marker.setMap(null); // removes marker from map
 		}
 	}
 
@@ -259,9 +273,9 @@ var locationUpdateTimer;
 	}
 
 	function allHidersTagged(hiders){
-
+		console.log(hiders);
 		var len = hiders.length;
-		for (var j = 0 ;j<len;j++){
+		for (var j = 0 ;j<len;j++) {
 			if (!hiders[j].isSeeker()) {
 				return false;
 			}

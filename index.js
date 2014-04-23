@@ -40,7 +40,7 @@ $( document ).ready(function() {
 	// Initialize timers
 	gameTimer = new Timer(600); 	// ten minutes of gametime
 	gameTimer.setSpeed(10);		// ten times faster than real life
-	gameTimer.onTimeOut(stop);
+	//gameTimer.onTimeOut(stop);
 	gameTimer.onStop(stop);
 	gameTimer.onTick(function(curTime) {
 		document.getElementById("divTimer").innerHTML = gameTimer.toString(curTime);

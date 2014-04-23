@@ -79,8 +79,8 @@ function saveToServer(parseObj){
 		success: function(object) {
 		    console.log("Save successful");
 		},
-	  	error: function(error) {
-	  		alert("Error: " + error.code + " " + error.message);
+	  	error: function(obj, error) {
+	  		console.log("Error: " + error.code + " " + error.message);
 	  	}
 	});	
 }
@@ -122,6 +122,8 @@ function handleViewer(results) {
 	for (var i = 0; i < results.length; i++) {
 		makeMarker(results[i]);
 	}
+
+	users = results;
 
 }
 

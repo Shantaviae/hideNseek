@@ -25,7 +25,9 @@ var Timer = function(time) {
 				ttl = 0;
 				clearInterval(handle);
 				handle = null;
-				endCallback.call(timer);	// within endCallback this will refer to this timer
+				if (endCallback) {
+					endCallback.call(timer);	// within endCallback this will refer to this timer
+				}
 			}
 		};
 	}
