@@ -64,7 +64,7 @@ var locationUpdateTimer;
 	//For Deleting the users who are leaving
 	function exitUser()
 	{
-	alert('Back_test');
+//	alert('Back_test');
 	deleteUser(player);
 	//showPage("#home");
     	}
