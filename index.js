@@ -35,7 +35,7 @@ function setHeaderPageContentHeights() {
 $( document ).ready(function() {
 
 	// Initialize map
-	initialize();
+	//initialize();
 	
 	// Initialize timers
 	gameTimer = new Timer(600); 	// ten minutes of gametime
@@ -66,6 +66,7 @@ function goToHomePage(){
 
 function goToWaitPage() {
 	
+	initialize();
 	showPage("#waitPage");
 }
 
