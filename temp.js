@@ -87,7 +87,7 @@ function saveToServer(parseObj){
 
 
 
-
+/*
 function hiderView() {
 	var query = new Parse.Query(Player);
 	query.equalTo("userclass", "hider");
@@ -102,13 +102,16 @@ function hiderView() {
 		}
 	});
 }
+*/
 
-function seekerView() {
+
+function requestPlayerData() {
 	var query = new Parse.Query(Player);
-	query.notEqualTo("objectId", player.getId());
+	//query.notEqualTo("objectId", player.getId());
+
 	query.find({
 		success:function(results) {
-			handleViewer(results);
+			handleData(results);
 		},
 		error: function(error) {
 			console.log("Error: " + error.code + " " + error.message);
@@ -116,14 +119,38 @@ function seekerView() {
 	});
 }
 
-function handleViewer(results) {
+function handleData(results) {
+	var playerIndex = null;
+	var playerArray;
+
 	console.log("users: " + results.length);
-	clearOtherPlayerMarkers();
-	for (var i = 0; i < results.length; i++) {
-		makeMarker(results[i]);
+	clearMarkers();
+
+	for (var i= 0 ;i<results.length;i++){
+		var obId = results[i].getId();
+		if (obId == player.getId()) {
+			playerIndex = i;
+		}
 	}
 
+	playerArray = results.splice(playerIndex, 1);
+
+	if (playerArray[0].isSeeker() && !player.isSeeker()) {
+		alert("You are now a seeker!");
+	}
+	player = playerArray[0];
+	makeMarker(player);
+
 	users = results;
+	console.log(users);
+
+	for (var i = 0; i < results.length; i++) {
+		if (player.isSeeker() || !results[i].isSeeker()) {
+			makeMarker(results[i]);
+		}
+	}
+
+	
 
 }
 

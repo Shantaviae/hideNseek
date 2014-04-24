@@ -19,11 +19,7 @@ var locationUpdateTimer;
 		locationUpdateTimer.setSpeed(10); // 10 times faster than real life
 		locationUpdateTimer.onTimeOut(function() {
 			console.log("get new locs");
-			if (player.isSeeker()) {
-				seekerView();
-			} else {
-				hiderView();
-			}
+			requestPlayerData();
 			// reset and restart the loop
 			this.reset();
 			this.start();
@@ -119,12 +115,14 @@ var locationUpdateTimer;
 						var infowindow = new google.maps.InfoWindow({
 							content :"Got You!"
 						});
-
+				// Now, the userclass is seeker !
 						user.setIsSeeker(true);
-		                if (allHidersTagged(users)) {
-		                	gameTimer.stop();
-		                	locationUpdateTimer.stop();
-		                }
+						saveToServer(user);
+
+		                // if (allHidersTagged(users)) {
+		                // 	gameTimer.stop();
+		                // 	locationUpdateTimer.stop();
+		                // }
 						
 					}
 					else {
@@ -154,10 +152,13 @@ var locationUpdateTimer;
 						
 	}
 
-	function clearOtherPlayerMarkers() {
+	function clearMarkers() {
 		for (var i = 0; i < users.length; i++) {
-			users[i].marker.setMap(null); // removes marker from map
+			if (users[i].marker) {
+				users[i].marker.setMap(null); // removes marker from map
+			}
 		}
+		player.marker.setMap(null);
 	}
 
 	function updateUserLocation(callback) {
