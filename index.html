@@ -32,42 +32,72 @@
   	<div id = "contentWrapper">
 	  	<div id = "header"> 
 			<div style= "margin: auto; height:100%;">
-				<img src="logo1transparent.png" height="100%" alt="Hide-N-Seek Logo"/>
+				<img src="images/logo1transparent.png" height="100%" alt="Hide-N-Seek Logo"/>
 			</div>
 			<div style= "position:absolute; right:10px; top:5px; height:100%;"> 
-				<a href="/hideNseek/" onClick="exitUser()"><img src="images/exit.png" height="85%" alt="Exit Icon" /></a><!-- this will be exit button -->
+				<a href="/hideNseek/" onClick="exitUser()"><img src="images/exit2.png" height="85%" alt="Exit Icon" /></a><!-- this will be exit button -->
 			</div>
 		</div>
 		<div id="home" class="fullScreenPage">
 			<br/><br/>
-			<img src="logo1transparent.png" width="90%" alt="Hide-N-Seek Logo" style="margin-top: 40%;"/><br/><br/><br/><br/>
+			<img src="images/logo1transparent.png" width="90%" alt="Hide-N-Seek Logo" style="margin-top: 40%;"/><br/><br/><br/><br/>
 			<div>
 				<!--<input type="button" class="btn" value="Start Game" onClick="goToWaitPage()"/><br/><br/>-->
-		 		<input type="button" class="btn" value="Join Game" onClick="goToWaitPage()"/>
+		 		<!--<input type="button" class="btn" value="Join Game" onClick="goToWaitPage()"/>-->
+				<input type="button" class="btn" value="Join Game" onClick="goToWaitPage2()"/>
 	 		</div>
 	 	</div>
-	 	<div id="mapPage" class="headerPage">
-	 		<div id = "map-canvas">
-	 		</div> 
-	 		<div id ="updateTimer"></div>
-	 		<div id ="divTimer" style="display:none;"></div>
-			<!-- Example for how to stop the game/clock for the tag buttons implemented in timer.js
-			<input id="tag" value=" Tag " onclick="javaScript:stop(true);" type="button" /><br/>-->
-	 	</div>
+		<div id="mainContainer">
+			<div id="mapPage" class="headerPage">
+				<div type = "button" style="text-align:left; margin: 10px 0px 0px 10px;" onclick="displayTips()">
+					<img src="images/infoIcon.png" alt="Exit Marker" width="11%"/>
+				<div id = "map-canvas"></div> 
+				<!-- Changed the css as not to affect any of the javascript that uses these div ids -->
+				<div id ="updateTimer"></div>
+				<div id ="divTimer" style="display:none;"></div>
+				<!-- Example for how to stop the game/clock for the tag buttons implemented in timer.js
+				<input id="tag" value=" Tag " onclick="javaScript:stop(true);" type="button" /><br/>-->
+			</div>
+			<div id = "waitPage2" class = "gameTutorial">
+				<div style="display:  table; width: 80%; margin: 0 auto; margin-top: 15px; margin-bottom: 0px;">
+					<div style="float:left; display:table-column; width: 80%; font-size: 18pt; text-align:center;">
+						TIPS
+					</div>
+					<div type = "button" style="float: left; width:20%; display:table-column; text-align:right;" onclick="startGame2()">
+						<img src="images/x-marker.png" alt="Exit Marker" width="40%"/>
+					</div>
+				</div>
+				<div class="introTop">
+					<ol id="ruleList">
+						<li>Role: You are a </li>
+						<li>Seekers <img src="images/marker_seeker.png" alt = "Seeker Icon"/> can only tag hiders on the map that are close enough to be tagged in person.</li>
+						<li>Hiders <img src="images/marker_hider.png" alt = "Hider Icon"/>can only see other hiders, but the seekers can see everyone. Move around to avoid getting tagged! If tagged, hiders become seekers.</li>
+						<li>Seekers will win the game if all the players turns to seekers!</li>
+						<li>Hiders will win the game when any of them has not been found in 30 minutes!</li>
+					</ol>
+				</div>
+				
+				<div class="introBottom">
+					<div style="margin: 0px 0px 15px 20px; width: 85%">
+						Watch the timer to see when you'll get the next update on the other players' locations! <img src="images/arrow2.png" alt="Arrow pointing to timer" width="25%"/>
+					</div>
+				</div>
+				
+			</div>
+		</div>
 	 	<div id = "waitPage" class="headerPage"> 
 	 		<br/>
-	 		<img src="marker_hider.png" alt = "Hider Icon"/> Hider <br/>
-	 		<img src="marker_seeker.png" alt = "Seeker Icon"/> Seeker <br/><br/>
+	 		<img src="images/marker_hider.png" alt = "Hider Icon"/> Hider <br/>
+	 		<img src="images/marker_seeker.png" alt = "Seeker Icon"/> Seeker <br/><br/>
 	 		
 	 		You are the seeker now.<br/><br/>
 	 		
 	 		<div id="GameRules">
 	 			The markers on the map will be updated every 30 seconds!<br/>
-	 			<img src="marker_seeker.png" alt = "Seeker Icon"/>For seeker: You can see all players. Click the hiders marker if they are close enough to you in order to win the game!<br/>
-	 		    <img src="marker_hider.png" alt = "Hider Icon"/>For Hiders: You can see all hiders but will not see the seekers until they are too enough to you. Move around to avoid to be finding by seekers. Once being found, you will become a seeker and the game continues.<br/>
+	 			<img src="images/marker_seeker.png" alt = "Seeker Icon"/>For seeker: You can see all players. Click the hiders marker if they are close enough to you in order to win the game!<br/>
+	 		    <img src="images/marker_hider.png" alt = "Hider Icon"/>For Hiders: You can see all hiders but will not see the seekers until they are too enough to you. Move around to avoid to be finding by seekers. Once being found, you will become a seeker and the game continues.<br/>
 	 			Hiders will win the game when any of them has not been found in 30 minutes!<br/>
-	 			Seekers will win the game if all the players turns to seekers!
-	 			 <br/>
+	 			Seekers will win the game if all the players turns to seekers!<br/>
 	 		</div>
 	 		<p style = "text-align:center">
 	 			<div type = "button" class = "btn2" onclick="startGame()">Continue</div>

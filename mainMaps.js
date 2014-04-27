@@ -421,7 +421,7 @@ function Hider(ID,currentLocation,isTagged,marker){
 
 	function addHider(location,map){
 		var image = {
-	    	url: 'marker_hider.png',
+	    	url: 'images/marker_hider.png',
 	    	// This marker is 20 pixels wide by 32 pixels tall.
 	    	size: new google.maps.Size(24, 24),
 	    	scaledSize: new google.maps.Size(24,24)
@@ -429,7 +429,7 @@ function Hider(ID,currentLocation,isTagged,marker){
 	  	};
 
 		var marker = new google.maps.Marker({
-			url: 'marker_hider.png',
+			url: 'images/marker_hider.png',
 	    	// This marker is 2oogle.maps.Marker({
 			map:map,
 			position:location,

@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "chalkFont";
+    src: url("fonts/PPETRIAL.ttf") format("truetype");
+}
+
 html { 
 	height: 100%;
 	margin: 0; 
@@ -81,8 +86,42 @@ div {
 	font-size: 14pt;
 }
 
+#mainContainer {
+	position: relative;
+}
 #mapPage {
-	padding: 0px;
+	position: relative;
+	top:0;
+	left: 0;
+}
+
+.gameTutorial {
+	width:310px;
+    height:510px;
+    position:absolute;
+    left:50%;
+    top:50%;
+    margin:-255px 0 0 -155px;
+	z-index: 10;
+	background:url("images/chalkboard.jpg");
+	opacity:0.85;
+	filter:alpha(opacity=85);
+	border-radius:20px;
+	font-size: 13pt;
+	font-weight: bold;
+	color: #FFFFFF;
+	font-family: 'chalkFont', sans-serif;
+}
+
+.introTop {
+	margin: -15px 10px 0px -7px;
+}
+
+.introBottom {
+	position: fixed;
+    bottom: 17px;
+    width: 100%;
+	font-size: 13pt;
 }
 
 #map-canvas { 
@@ -91,7 +130,7 @@ div {
 	margin: 0%;
 }
 
-#divTimer{
+#updateTimer{
 	color: #ECECEA;
 	font-size: 14pt;
 	line-height: 20pt;
@@ -111,7 +150,7 @@ div {
 	box-shadow: #ECECEA 3px 3px 3px;
 }
 
-#updateTimer {
+#divTimer { 
 	color: #74AFAD;
 	margin: auto;
 	width: 40%;

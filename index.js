@@ -52,6 +52,7 @@ $( document ).ready(function() {
 	$("#mapPage").hide();
 	$("#waitPage").hide();
 	$("#startFormDiv").hide();
+	$("#waitPage2").hide();
 	// Dynamically size pages with header
 	setHeaderPageContentHeights();
 	$(window).resize(setHeaderPageContentHeights);
@@ -68,6 +69,37 @@ function goToWaitPage() {
 	
 	initialize();
 	showPage("#waitPage");
+}
+
+function goToWaitPage2() {
+	
+	initialize();
+	showPage("#mapPage");
+	google.maps.event.trigger(map, 'resize');
+	
+	var list = document.getElementById("ruleList");
+	items = list.childNodes;
+	
+	items[0].innerHTML = items[0].innerHTML + "<span style=\"color:rgb(217,133,59);\">" + playerClass + "</span>";
+	
+	$("#waitPage2").show();
+}
+
+function displayTips() {
+	var list = document.getElementById("ruleList");
+	items = list.childNodes;
+	
+	items[0].innerHTML = items[0].innerHTML + "<span style=\"color:rgb(217,133,59);\">" + playerClass + "</span>";
+	
+	$("#waitPage2").show();
+}
+function startGame2(){	
+	$("#waitPage2").hide();
+	//showPage("#mapPage");
+	gameTimer.start();
+	locationUpdateTimer.start();
+	//google.maps.event.trigger(map, 'resize');
+		
 }
 
 function startGame(){	
