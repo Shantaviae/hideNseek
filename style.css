@@ -150,6 +150,12 @@ div {
 	box-shadow: #ECECEA 3px 3px 3px;
 }
 
+#infoDiv {
+	position:fixed;
+    top: 37px; 
+	left: 0px;
+}
+
 #divTimer { 
 	color: #74AFAD;
 	margin: auto;

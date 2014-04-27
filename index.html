@@ -49,12 +49,13 @@
 	 	</div>
 		<div id="mainContainer">
 			<div id="mapPage" class="headerPage">
-				<div type = "button" style="text-align:left; margin: 10px 0px 0px 10px;" onclick="displayTips()">
-					<img src="images/infoIcon.png" alt="Exit Marker" width="11%"/>
 				<div id = "map-canvas"></div> 
 				<!-- Changed the css as not to affect any of the javascript that uses these div ids -->
 				<div id ="updateTimer"></div>
 				<div id ="divTimer" style="display:none;"></div>
+				<div type = "button" id="infoDiv" style="text-align:left; margin: 10px 0px 0px 10px;" onclick="displayTips() ">
+					<img src="images/infoIcon.png" alt="Exit Marker" width="20%"/>
+				</div>
 				<!-- Example for how to stop the game/clock for the tag buttons implemented in timer.js
 				<input id="tag" value=" Tag " onclick="javaScript:stop(true);" type="button" /><br/>-->
 			</div>
