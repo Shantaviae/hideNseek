@@ -158,6 +158,17 @@ div {
 	text-align: center;
 }
 
+#divScore{ 
+	color: #D9853B;
+	margin: auto;
+	width: 60%;
+	position: absolute;
+    top: 17px; 
+	right: 5%;
+	font-size: 14pt;
+	text-align: center;
+}
+
 .btn {
 
   font-family: Georgia;

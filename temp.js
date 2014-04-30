@@ -126,12 +126,29 @@ function handleData(results) {
 	console.log("users: " + results.length);
 	clearMarkers();
 
+	var numSeekers = 0
+	var numHiders = 0;
+	
+	
+	for (var i = 0; i < results.length; i++) {
+		if (results[i].isSeeker()) {
+			numSeekers = numSeekers + 1;
+		}
+		else {
+			numHiders = numHiders + 1;
+		}
+	}
+
+	document.getElementById("divScore").innerHTML = "Seekers: " + numSeekers + " &nbsp&nbsp&nbsp Hiders: " + numHiders;
+			
 	for (var i= 0 ;i<results.length;i++){
 		var obId = results[i].getId();
 		if (obId == player.getId()) {
 			playerIndex = i;
 		}
 	}
+	
+	
 
 	playerArray = results.splice(playerIndex, 1);
 

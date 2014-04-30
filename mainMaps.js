@@ -165,7 +165,9 @@ var locationUpdateTimer;
 				users[i].marker.setMap(null); // removes marker from map
 			}
 		}
-		player.marker.setMap(null);
+		if (player) {
+			player.marker.setMap(null);
+		}
 	}
 
 	function updateUserLocation(callback) {
