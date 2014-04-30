@@ -96,12 +96,11 @@ div {
 }
 
 .gameTutorial {
-	width:310px;
-    height:510px;
+	width:95%;
     position:absolute;
-    left:50%;
-    top:50%;
-    margin:-255px 0 0 -155px;
+    left:2.5%;
+    top:2.5%;
+    margin: auto;
 	z-index: 10;
 	background:url("images/chalkboard.jpg");
 	opacity:0.85;
@@ -111,17 +110,7 @@ div {
 	font-weight: bold;
 	color: #FFFFFF;
 	font-family: 'chalkFont', sans-serif;
-}
-
-.introTop {
-	margin: -15px 10px 0px -7px;
-}
-
-.introBottom {
-	position: fixed;
-    bottom: 17px;
-    width: 100%;
-	font-size: 13pt;
+	padding: 10px;
 }
 
 #map-canvas { 
