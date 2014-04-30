@@ -97,6 +97,8 @@ div {
 
 .gameTutorial {
 	width:95%;
+	height: 90%; 
+	overflow: scroll;
     position:absolute;
     left:2.5%;
     top:2.5%;
@@ -106,7 +108,7 @@ div {
 	opacity:0.85;
 	filter:alpha(opacity=85);
 	border-radius:20px;
-	font-size: 13pt;
+	font-size: 14pt;
 	font-weight: bold;
 	color: #FFFFFF;
 	font-family: 'chalkFont', sans-serif;
