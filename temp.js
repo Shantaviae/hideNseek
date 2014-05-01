@@ -40,6 +40,18 @@ var Player = Parse.Object.extend("Player", {
 			this.set("longitude", lon);
 		}
 	},
+	settaggedBy:function(Id){
+		if (typeof(Id) === "string") {
+			this.set("taggedBy",Id);
+		}
+		else {
+			alert("wroong"+(typeof(Id)));
+		}
+
+	},
+	gettaggedBy:function(){
+		return (this.get("taggedBy"));
+	},
 	setIsSeeker: function(isSeeker) {
 		if (typeof(isSeeker) === "boolean") {
 			if (isSeeker) {
@@ -48,6 +60,9 @@ var Player = Parse.Object.extend("Player", {
 				this.set("userclass", "hider");
 			}
 		}
+	},
+	getName:function(){
+		return this.get("name");
 	}
  }, 
  {
@@ -153,7 +168,9 @@ function handleData(results) {
 	playerArray = results.splice(playerIndex, 1);
 
 	if (playerArray[0].isSeeker() && !player.isSeeker()) {
-		alert("You are now a seeker!");
+
+		var nametagged = playerArray[0].gettaggedBy();
+		alert("You are tagged by "+nametagged+"\n"+"You are now a seeker!");
 	}
 	player = playerArray[0];
 	makeMarker(player);
@@ -206,6 +223,8 @@ function addUser(lat,long)
 				temp.set("userclass","hider");
 				temp.set("latitude",lat);
 				temp.set("longitude",long);
+				temp.set("taggedBy","NotTagged");
+				temp.set("name",randomname());
 				temp.save(null, {
 						success: function(temp) {
 							handleNewUser(temp);
@@ -224,6 +243,7 @@ function addUser(lat,long)
 				temp.set("userclass","seeker");
 				temp.set("latitude",lat);
 				temp.set("longitude",long);
+				temp.set("name",randomname());
 				temp.save(null, {
 						success: function(temp) {
 							handleNewUser(temp);
@@ -244,11 +264,32 @@ function addUser(lat,long)
 	
 }
 
+function randomname(){
+	var namelist = ["Iron Man","Super Man","Spider Man","X men", "Bat man", "Hawk", "Natasha","Hulk","Thor","Captain American"
+					,"God","Zeus","Apocalypse","Galactus","Beyonder","Silver Surfer","Garrosh Hellscream","Illidan Stormrage","Deathwing","Arthas Menethil"
+					,"Sargeras"];
+	var num = getRandomInt(0,namelist.length);
+	return namelist[num];				
 
+}
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 function handleNewUser(temp) {
 	player = temp;
+
 	makeMarker(player,map);
+
+	var playerName;
+	if (player){
+		playerName = player.getName();
+		//alert("You are "+playerName+"!!");
+	}
+	var nameBar = '<div class = "btn" id  = "nameBar" style = "bottom:0px;text-align:center;position:fixed;bottom: 0px; width:100%;height:35px;padding-top:4px;font-size:11pt"></div>';
+	$("#mapPage").append(nameBar);
+	$("#nameBar").html("You are : "+playerName);
 }
 
 function deleteUser(parseObj) {

@@ -96,6 +96,9 @@ function displayTips() {
 function startGame2(){	
 	$("#waitPage2").hide();
 	$("#mapPage");
+	
+	
+
 	gameTimer.start();
 	locationUpdateTimer.start();
 	google.maps.event.trigger(map, 'resize');

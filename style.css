@@ -24,7 +24,17 @@ div {
   box-sizing: border-box; 			/* Chrome, IE 8+, Opera, Safari 5.1 */
 }
 
+#username {
+  font-family: Georgia;
+  font-size: 24px;
+  margin-bottom: 20px;	
+  padding: 10px 20px 10px 20px;
+  border: solid #558C89 1px;
+  text-decoration: none;
+  font-family: 'Ubuntu', sans-serif;
+  width: 46%;
 
+}
 #contentWrapper {
 	display: block;
 	position: relative;
@@ -128,7 +138,7 @@ div {
 	text-align: center;
 	position:fixed;
     right:5%;
-    bottom: 5%; 
+    bottom: 10%; 
 	width:53px;
 	height:27px;
 	-webkit-border-radius: 5px;

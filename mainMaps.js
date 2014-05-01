@@ -119,11 +119,17 @@ var locationUpdateTimer;
 					var distance = lineDistance(p1,p2)*100000;
 					console.log("the distance is " + distance);
 					if ( distance <= 15){
+						var name = player.getName();
+						var username = user.getName();
 						var infowindow = new google.maps.InfoWindow({
-							content :"Got You!"
+							content :"Got You! "+username+"!	"
 						});
 				// Now, the userclass is seeker !
 						user.setIsSeeker(true);
+						
+						//alert("the name is = "+name);
+						user.settaggedBy(name);
+						//console.log("tagged by "+player.getId());
 						saveToServer(user);
 
 		                // if (allHidersTagged(users)) {
@@ -298,149 +304,149 @@ var locationUpdateTimer;
 // ****************************** Old functions **************************
 // Not used anymore
 
-function moveHiders() {
-	// TODO remove hardcoding!!!
-	moveHider(hiders[0],map,"down");
-	moveHider(hiders[1],map,"up");
-	moveHider(hiders[2],map,"left");
-	moveHider(hiders[3],map,"right");
-}
+// function moveHiders() {
+// 	// TODO remove hardcoding!!!
+// 	moveHider(hiders[0],map,"down");
+// 	moveHider(hiders[1],map,"up");
+// 	moveHider(hiders[2],map,"left");
+// 	moveHider(hiders[3],map,"right");
+// }
 
-function moveHider(hider,map,action){
+// function moveHider(hider,map,action){
 
-	// we only move untagged hiders
-	if (hider.isTagged) {
-		return;
-	}
+// 	// we only move untagged hiders
+// 	if (hider.isTagged) {
+// 		return;
+// 	}
 
-	var marker = hider.marker;
-	var markerLocation = marker.position;
+// 	var marker = hider.marker;
+// 	var markerLocation = marker.position;
 
-	var lk = markerLocation.k;
-	var lA = markerLocation.A;
+// 	var lk = markerLocation.k;
+// 	var lA = markerLocation.A;
 
 
-	switch (action){
-		case "down":
-			 //lk = lk + 0.00001;
-			 lA = lA - 0.00001;
-			 break;
-		case "up":
-			 //lk = lk + 0.00001;
-			 lA = lA + 0.00001;
-			 break;
-		case "left":
-			 lk = lk + 0.00001;
-			 //lA = lA - 0.00001;
-			 break;
-		case "right":
-			 lk = lk - 0.00001;
-			 //lA = lA - 0.00001;
-			 break;
-	}
+// 	switch (action){
+// 		case "down":
+// 			 //lk = lk + 0.00001;
+// 			 lA = lA - 0.00001;
+// 			 break;
+// 		case "up":
+// 			 //lk = lk + 0.00001;
+// 			 lA = lA + 0.00001;
+// 			 break;
+// 		case "left":
+// 			 lk = lk + 0.00001;
+// 			 //lA = lA - 0.00001;
+// 			 break;
+// 		case "right":
+// 			 lk = lk - 0.00001;
+// 			 //lA = lA - 0.00001;
+// 			 break;
+// 	}
 		
 
-	var newlocation = new google.maps.LatLng(lk,lA);
-	marker.setPosition(newlocation);
+// 	var newlocation = new google.maps.LatLng(lk,lA);
+// 	marker.setPosition(newlocation);
 
-}
+// }
 
-function Hider(ID,currentLocation,isTagged,marker){
+// function Hider(ID,currentLocation,isTagged,marker){
 
-		//this.playerName = playerName;
-		//this.startTime = startTime;
-		this.ID = ID;
-		this.currentLocation = currentLocation;
-		this.isTagged = isTagged;
-		this.marker = marker;
+// 		//this.playerName = playerName;
+// 		//this.startTime = startTime;
+// 		this.ID = ID;
+// 		this.currentLocation = currentLocation;
+// 		this.isTagged = isTagged;
+// 		this.marker = marker;
 
-		// closure variable to bind click event to this hider
-		var hider = this;
+// 		// closure variable to bind click event to this hider
+// 		var hider = this;
 
-		//==================This is for tapping hiders===================//		
-		google.maps.event.addListener(this.marker, 'click', function() {
+// 		//==================This is for tapping hiders===================//		
+// 		google.maps.event.addListener(this.marker, 'click', function() {
 
-			var currentSeeker = seekers[0].currentLocation;
-			var currentHider = marker.position;
+// 			var currentSeeker = seekers[0].currentLocation;
+// 			var currentHider = marker.position;
 
-			var p2 = new point(currentHider.A,currentHider.k);
-		  	var p1 = new point(currentSeeker.A,currentSeeker.k);
-			var distance = lineDistance(p1,p2)*100000;
-			console.log("the distance is " + distance);
-			if ( distance <= 15){
-				var infowindow = new google.maps.InfoWindow({
-					content :"Got You!"
-				});
+// 			var p2 = new point(currentHider.A,currentHider.k);
+// 		  	var p1 = new point(currentSeeker.A,currentSeeker.k);
+// 			var distance = lineDistance(p1,p2)*100000;
+// 			console.log("the distance is " + distance);
+// 			if ( distance <= 15){
+// 				var infowindow = new google.maps.InfoWindow({
+// 					content :"Got You!"
+// 				});
 
-				hider.isTagged = true;
-                if (allHidersTagged(hiders)) {
-                	gameTimer.stop();
-                	locationUpdateTimer.stop();
-                }
+// 				hider.isTagged = true;
+//                 if (allHidersTagged(hiders)) {
+//                 	gameTimer.stop();
+//                 	locationUpdateTimer.stop();
+//                 }
 				
-			}
-			else {
-				var infowindow = new google.maps.InfoWindow({
-					content :"You are too far!"
-				});
-			}	
+// 			}
+// 			else {
+// 				var infowindow = new google.maps.InfoWindow({
+// 					content :"You are too far!"
+// 				});
+// 			}	
 
-			infowindow.open(map,marker);
-		});
-	}
+// 			infowindow.open(map,marker);
+// 		});
+// 	}
 
 
-	function Seeker(currentLocation,marker){
-		//this.playerName = playerName;
-		//this.startTime = startTime;
-		this.currentLocation = currentLocation;
-		this.marker = marker;
-	}
+// 	function Seeker(currentLocation,marker){
+// 		//this.playerName = playerName;
+// 		//this.startTime = startTime;
+// 		this.currentLocation = currentLocation;
+// 		this.marker = marker;
+// 	}
 
-	function makeHiders(pos){
-			var posk = pos.k;
-			var posA = pos.A;		
+// 	function makeHiders(pos){
+// 			var posk = pos.k;
+// 			var posA = pos.A;		
 		
 
-			var pos1 = new google.maps.LatLng(pos.k,pos.A+0.0001);
-			var pos2 = new google.maps.LatLng(pos.k-0.0001,pos.A);
-			var pos3 = new google.maps.LatLng(pos.k,pos.A-0.0001);
-			var pos4 = new google.maps.LatLng(pos.k+0.0001,pos.A);
+// 			var pos1 = new google.maps.LatLng(pos.k,pos.A+0.0001);
+// 			var pos2 = new google.maps.LatLng(pos.k-0.0001,pos.A);
+// 			var pos3 = new google.maps.LatLng(pos.k,pos.A-0.0001);
+// 			var pos4 = new google.maps.LatLng(pos.k+0.0001,pos.A);
 
-			var hider1 = new Hider(0,pos1,false,addHider(pos1,map));
-			var hider2 = new Hider(0,pos2,false,addHider(pos2,map));
-			var hider3 = new Hider(0,pos3,false,addHider(pos3,map));
-			var hider4 = new Hider(0,pos4,false,addHider(pos4,map));
+// 			var hider1 = new Hider(0,pos1,false,addHider(pos1,map));
+// 			var hider2 = new Hider(0,pos2,false,addHider(pos2,map));
+// 			var hider3 = new Hider(0,pos3,false,addHider(pos3,map));
+// 			var hider4 = new Hider(0,pos4,false,addHider(pos4,map));
 
-			hiders.push(hider1);
-			hiders.push(hider2);
-			hiders.push(hider3);
-			hiders.push(hider4);
+// 			hiders.push(hider1);
+// 			hiders.push(hider2);
+// 			hiders.push(hider3);
+// 			hiders.push(hider4);
 
-			locationUpdateTimer.start();
-	}
+// 			locationUpdateTimer.start();
+// 	}
 
 
-	function addHider(location,map){
-		var image = {
-	    	url: 'images/marker_hider.png',
-	    	// This marker is 20 pixels wide by 32 pixels tall.
-	    	size: new google.maps.Size(24, 24),
-	    	scaledSize: new google.maps.Size(24,24)
-	    	// The origin for this image is 0,0
-	  	};
+// 	function addHider(location,map){
+// 		var image = {
+// 	    	url: 'images/marker_hider.png',
+// 	    	// This marker is 20 pixels wide by 32 pixels tall.
+// 	    	size: new google.maps.Size(24, 24),
+// 	    	scaledSize: new google.maps.Size(24,24)
+// 	    	// The origin for this image is 0,0
+// 	  	};
 
-		var marker = new google.maps.Marker({
-			url: 'images/marker_hider.png',
-	    	// This marker is 2oogle.maps.Marker({
-			map:map,
-			position:location,
-			icon: image
+// 		var marker = new google.maps.Marker({
+// 			url: 'images/marker_hider.png',
+// 	    	// This marker is 2oogle.maps.Marker({
+// 			map:map,
+// 			position:location,
+// 			icon: image
 
-		});
+// 		});
 
-		return marker;
+// 		return marker;
 							
-	}
+// 	}
 
 
