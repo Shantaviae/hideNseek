@@ -80,9 +80,9 @@ var locationUpdateTimer;
 		var url;
 
 		if (user === player) {
-			url = "images/user_";
+			url = "img/user_";
 		} else {
-			url = "images/marker_";
+			url = "img/marker_";
 		}
 
 		if (user.isSeeker()) {
@@ -429,7 +429,7 @@ var locationUpdateTimer;
 
 // 	function addHider(location,map){
 // 		var image = {
-// 	    	url: 'images/marker_hider.png',
+// 	    	url: 'img/marker_hider.png',
 // 	    	// This marker is 20 pixels wide by 32 pixels tall.
 // 	    	size: new google.maps.Size(24, 24),
 // 	    	scaledSize: new google.maps.Size(24,24)
@@ -437,7 +437,7 @@ var locationUpdateTimer;
 // 	  	};
 
 // 		var marker = new google.maps.Marker({
-// 			url: 'images/marker_hider.png',
+// 			url: 'img/marker_hider.png',
 // 	    	// This marker is 2oogle.maps.Marker({
 // 			map:map,
 // 			position:location,

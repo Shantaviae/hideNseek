@@ -114,7 +114,7 @@ div {
     top:2.5%;
     margin: auto;
 	z-index: 10;
-	background:url("images/chalkboard.jpg");
+	background:url("chalkboard.jpg");
 	opacity:0.85;
 	filter:alpha(opacity=85);
 	border-radius:20px;

@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 	<link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="alertify.core.css" />
-	<link rel="stylesheet" href="alertify.default.css" />
+	<link rel="stylesheet" href="css/alertify.core.css" />
+	<link rel="stylesheet" href="css/alertify.default.css" />
 	
 	<script type="text/javascript">
 		var handler;
@@ -15,14 +15,14 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSWmq0ggeLi3YlxAOSQ3Wo6M6RPRZWPk8&sensor=true">
     </script>
 
-	<script src="parse-1.2.18.js"></script>
+	<script src="js/parse-1.2.18.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	
-	<script type="text/javascript" src="alertify.min.js"></script>
-	<script type="text/javascript" src = "timer.js"></script>
-	<script type="text/javascript" src = "index.js"></script>
-	<script type="text/javascript" src = "mainMaps.js"></script>
-	<script type="text/javascript" src = "temp.js"></script>
+	<script type="text/javascript" src="js/alertify.min.js"></script>
+	<script type="text/javascript" src = "js/timer.js"></script>
+	<script type="text/javascript" src = "js/index.js"></script>
+	<script type="text/javascript" src = "js/mainMaps.js"></script>
+	<script type="text/javascript" src = "js/temp.js"></script>
 	
    
   </head>
@@ -32,15 +32,15 @@
   	<div id = "contentWrapper">
 	  	<div id = "header"> 
 			<div style= "margin: auto; height:100%;">
-				<img src="images/logo1transparent.png" height="100%" alt="Hide-N-Seek Logo"/>
+				<img src="img/logo1transparent.png" height="100%" alt="Hide-N-Seek Logo"/>
 			</div>
 			<div style= "position:absolute; right:10px; top:5px; height:100%;"> 
-				<a href="/hideNseek/" onClick="exitUser()"><img src="images/exit2.png" height="85%" alt="Exit Icon" /></a><!-- this will be exit button -->
+				<a href="/hideNseek/" onClick="exitUser()"><img src="img/exit2.png" height="85%" alt="Exit Icon" /></a><!-- this will be exit button -->
 			</div>
 		</div>
 		<div id="home" class="fullScreenPage">
 			<br/><br/>
-			<img src="images/logo1transparent.png" width="90%" alt="Hide-N-Seek Logo" style="margin-top: 40%;"/><br/><br/><br/><br/>
+			<img src="img/logo1transparent.png" width="90%" alt="Hide-N-Seek Logo" style="margin-top: 40%;"/><br/><br/><br/><br/>
 			<div>
 				<!--<input type="button" class="btn" value="Start Game" onClick="goToWaitPage()"/><br/><br/>-->
 		 		<!--<input type="button" class="btn" value="Join Game" onClick="goToWaitPage()"/>-->
@@ -56,7 +56,7 @@
 				<div id ="divScore"></div>
 				<div id ="divTimer" style="display:none;"></div>
 				<div type = "button" id="infoDiv" style="text-align:left; margin: 10px 0px 0px 10px;" onclick="displayTips() ">
-					<img src="images/infoIcon.png" alt="Exit Marker" width="20%"/>
+					<img src="img/infoIcon.png" alt="Exit Marker" width="20%"/>
 				</div>
 				<!-- Example for how to stop the game/clock for the tag buttons implemented in timer.js
 				<input id="tag" value=" Tag " onclick="javaScript:stop(true);" type="button" /><br/>-->
@@ -67,32 +67,32 @@
 						TIPS
 					</div>
 					<div type = "button" style="float: left; width:20%; display:table-column; text-align:right;" onclick="startGame2()">
-						<img src="images/x-marker.png" alt="Exit Marker" width="40%"/>
+						<img src="img/x-marker.png" alt="Exit Marker" width="40%"/>
 					</div>
 				</div>
 					<ol id="ruleList">
-						<li>Seekers <img src="images/marker_seeker.png" alt = "Seeker Icon"/> can only tag hiders on the map that are close enough to be tagged in person.</li>
-						<li>Hiders <img src="images/marker_hider.png" alt = "Hider Icon"/>can only see other hiders, but the seekers can see everyone. Move around to avoid getting tagged! If tagged, hiders become seekers.</li>
+						<li>Seekers <img src="img/marker_seeker.png" alt = "Seeker Icon"/> can only tag hiders on the map that are close enough to be tagged in person.</li>
+						<li>Hiders <img src="img/marker_hider.png" alt = "Hider Icon"/>can only see other hiders, but the seekers can see everyone. Move around to avoid getting tagged! If tagged, hiders become seekers.</li>
 						<li>Seekers will win the game if all the players turns to seekers!</li>
 						<li>Hiders will win the game when any of them has not been found in 30 minutes!</li>
 					</ol>
 					
-						Watch the timer to see when you'll get the next update on the other players' locations! <!--<img src="images/arrow2.png" alt="Arrow pointing to timer" width="50px"/>-->
+						Watch the timer to see when you'll get the next update on the other players' locations! <!--<img src="img/arrow2.png" alt="Arrow pointing to timer" width="50px"/>-->
 			</div>
 				
 			</div>
 		</div>
 	 	<div id = "waitPage" class="headerPage"> 
 	 		<br/>
-	 		<img src="images/marker_hider.png" alt = "Hider Icon"/> Hider <br/>
-	 		<img src="images/marker_seeker.png" alt = "Seeker Icon"/> Seeker <br/><br/>
+	 		<img src="img/marker_hider.png" alt = "Hider Icon"/> Hider <br/>
+	 		<img src="img/marker_seeker.png" alt = "Seeker Icon"/> Seeker <br/><br/>
 	 		
 	 		You are the seeker now.<br/><br/>
 	 		
 	 		<div id="GameRules">
 	 			The markers on the map will be updated every 30 seconds!<br/>
-	 			<img src="images/marker_seeker.png" alt = "Seeker Icon"/>For seeker: You can see all players. Click the hiders marker if they are close enough to you in order to win the game!<br/>
-	 		    <img src="images/marker_hider.png" alt = "Hider Icon"/>For Hiders: You can see all hiders but will not see the seekers until they are too enough to you. Move around to avoid to be finding by seekers. Once being found, you will become a seeker and the game continues.<br/>
+	 			<img src="img/marker_seeker.png" alt = "Seeker Icon"/>For seeker: You can see all players. Click the hiders marker if they are close enough to you in order to win the game!<br/>
+	 		    <img src="img/marker_hider.png" alt = "Hider Icon"/>For Hiders: You can see all hiders but will not see the seekers until they are too enough to you. Move around to avoid to be finding by seekers. Once being found, you will become a seeker and the game continues.<br/>
 	 			Hiders will win the game when any of them has not been found in 30 minutes!<br/>
 	 			Seekers will win the game if all the players turns to seekers!<br/>
 	 		</div>
